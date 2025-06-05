@@ -1,5 +1,13 @@
+
 en:
   devise:
+    users:
+        sessions:
+          title: "Sign in to your account"
+          email: "Email"
+          password: "Password"
+          remember_me: "Remember me"
+          submit: "Sign in"
     admins:
       sessions:
           title: "Sign in as Administrator"

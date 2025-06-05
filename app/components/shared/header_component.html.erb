@@ -28,7 +28,7 @@
         <% elsif helpers.user_signed_in? %>
           <a href="<%= users_dashboard_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">User Panel</a>
           <a href="<%= orders_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">My Orders</a>
-          <span class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 ml-0 md:ml-2 block md:inline text-center">Hello, <%= current_user.first_name %>!</span>
+          <span class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 ml-0 md:ml-2 block md:inline text-center">Hello, <%= helpers.current_user.first_name %>!</span>
           <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "w-4/5 mx-auto md:w-auto md:mx-0 button is-light block md:inline text-center py-2 rounded-lg bg-purple-50 md:bg-transparent" %>
         <% else %>
           <a class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 px-4 py-2 bg-purple-700 text-white rounded-full font-semibold hover:bg-purple-800 transition block md:inline text-center" href="<%= new_user_registration_path %>">Sign up</a>
