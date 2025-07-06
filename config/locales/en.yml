@@ -65,3 +65,29 @@ en:
       security:
         title: "Security"
         desc: "We guarantee secure transactions and data protection"
+    testimonials:
+      title: "What our customers say"
+      list:
+        - name: "Anna Blacksmith"
+          username: "annablacksmith"
+          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=A"
+          content: "TicketWave is the best way to buy tickets. Fast, convenient, and hassle-free. Highly recommended!"
+          stars: 5
+        - name: "Mark Anchor"
+          username: "markanchor"
+          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=M"
+          content: "Thanks to TicketWave, I haven't missed any concerts of my favorite band. Notifications work great!"
+          stars: 4
+          half_star: true
+        - name: "Kate Cherry"
+          username: "katecherry"
+          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=K"
+          content: "Customer service at the highest level. I had a ticket issue that was resolved within minutes!"
+          stars: 5
+    cta:
+      title: "Ready for unforgettable experiences?"
+      button: "Start your adventure"
+  shared:
+    footer:
+      application_name: "TicketWave"
+      rights_reserved: "by Jakub Mikołajczyk. All rights reserved."
