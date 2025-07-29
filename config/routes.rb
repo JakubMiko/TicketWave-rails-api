@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   get "events/:event_id/ticket_batches/:ticket_batch_id/orders/new", to: "orders#new", as: "new_ticket_batch_order"
 
-  resources :events
   root to: "landing#show"
   get "up" => "rails/health#show", as: :rails_health_check
 end
