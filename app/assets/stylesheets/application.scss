@@ -1,20 +1,9 @@
 // Define variables first
 $purple: #7d3cff;
+$primary: $purple;
 
-// Use modern @use syntax with proper configuration
-@use "bulma/sass/utilities";
-@use "bulma/sass/base";
-@use "bulma/sass/elements";
-@use "bulma/sass/form";
-@use "bulma/sass/components";
-@use "bulma/sass/grid";
-@use "bulma/sass/helpers";
-@use "bulma/sass/layout";
-
-// Override Bulma variables after utilities import
-@use "bulma/sass/utilities" with (
-  $primary: $purple
-);
+// Use stable @import syntax
+@import "bulma";
 
 :root {
     --primary-color: #f8f0ff; /* Bardzo jasny fiolet */
