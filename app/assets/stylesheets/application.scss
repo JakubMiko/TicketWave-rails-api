@@ -1,11 +1,20 @@
+// Define variables first
 $purple: #7d3cff;
-$primary: $purple;
 
-@use "sass/utilities" with (
-    $primary: $purple,
+// Use modern @use syntax with proper configuration
+@use "bulma/sass/utilities";
+@use "bulma/sass/base";
+@use "bulma/sass/elements";
+@use "bulma/sass/form";
+@use "bulma/sass/components";
+@use "bulma/sass/grid";
+@use "bulma/sass/helpers";
+@use "bulma/sass/layout";
+
+// Override Bulma variables after utilities import
+@use "bulma/sass/utilities" with (
+  $primary: $purple
 );
-
-@use "bulma";
 
 :root {
     --primary-color: #f8f0ff; /* Bardzo jasny fiolet */
@@ -46,11 +55,11 @@ $primary: $purple;
   .footer {
     .content {
       strong {
-        color: #5a0e8a; // Ciemniejszy fiolet dla lepszego kontrastu w trybie jasnym
-        font-weight: 600; // Zwiększenie grubości fontu dla lepszej widoczności
+        color: #5a0e8a;
+        font-weight: 600;
       }
       p {
-        color: #333; // Ciemniejszy kolor tekstu w trybie jasnym
+        color: #333;
       }
     }
   }
