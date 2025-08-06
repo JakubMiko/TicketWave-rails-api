@@ -1,4 +1,4 @@
-# 🎟️ TicketWave 🎟️ 
+# 🎟️ TicketWave 🎟️
 
 TicketWave is a comprehensive event ticketing platform that allows users to discover and purchase tickets for various events like concerts, theater shows, sports events, and stand-up comedy. Built on Ruby on Rails with PostgreSQL database, this application demonstrates modern web development practices.
 
@@ -22,7 +22,7 @@ TicketWave is a comprehensive event ticketing platform that allows users to disc
 ### User Dashboard
 ![User Dashboard](app/assets/images/readme/users_dashboard.png)
 
-### User Order History 
+### User Order History
 ![User Order History](app/assets/images/readme/users_order_history.png)
 
 ### Admin Dashboard
@@ -98,3 +98,23 @@ rails db:create db:migrate db:seed
 ```bash
 bin/dev
 ```
+
+# Test
+
+TicketWave uses [RSpec](https://github.com/rspec/rspec-rails) to automate testing. The test suite primarily covers services and controllers, ensuring the reliability and correctness of the application's core logic.
+
+##### Code Coverage (SimpleCov)
+
+Code coverage is measured using [SimpleCov](https://github.com/simplecov-ruby/simplecov).
+Coverage is generated automatically every time you run the test suite with RSpec.
+
+After tests finish, you can open the coverage report in your browser:
+
+- **MacOS:**
+  ```
+  open coverage/index.html
+  ```
+- **Linux:**
+  ```
+  xdg-open coverage/index.html
+  ```
