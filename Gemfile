@@ -71,6 +71,9 @@ group :development, :test do
 
   # Creates api serialization
   gem "jsonapi-serializer"
+
+  # Provides Haml generators for Rails and enables Haml as the template engine
+  gem "haml-rails", "~> 2.0"
 end
 
 group :development do
