@@ -45,8 +45,15 @@ builder:
 env:
   # clear:
   #   DB_HOST: 192.168.0.2
+  clear:
+      DB_HOST: ticketwave-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_NAME: ticket_wave_production
+      RAILS_LOG_TO_STDOUT: "true"
   secret:
     - RAILS_MASTER_KEY
+    - DB_PASSWORD
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal app logs -r job" will tail logs from the first server in the job section.
@@ -102,3 +109,17 @@ ssh:
 #     port: 6379
 #     directories:
 #       - data:/data
+accessories:
+  db:
+    image: postgres:15
+    host: 165.227.167.239
+    port: 5432:5432
+    env:
+      clear:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: ticket_wave_production
+      secret:
+        - POSTGRES_PASSWORD
+
+volumes:
+  - "postgres_data:/var/lib/postgresql/data"

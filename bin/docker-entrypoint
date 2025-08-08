@@ -6,8 +6,22 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
+# Wait for database to be available if DB_HOST is defined
+if [ -n "$DB_HOST" ]; then
+  echo "Checking database connection at $DB_HOST:$DB_PORT..."
+
+  # Try to connect to database until it's available
+  until pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "${DB_USER:-postgres}"; do
+    echo "Database unavailable, waiting..."
+    sleep 2
+  done
+
+  echo "Database available, continuing..."
+fi
+
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+  echo "Preparing database..."
   ./bin/rails db:prepare
 fi
 
