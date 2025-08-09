@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Generate a random SECRET_KEY_BASE if not provided
+if [ -z "$SECRET_KEY_BASE" ]; then
+  export SECRET_KEY_BASE=$(openssl rand -hex 64)
+  echo "Generated random SECRET_KEY_BASE"
+fi
+
+# Set DB_PASSWORD if not provided
+if [ -z "$DB_PASSWORD" ]; then
+  export DB_PASSWORD=postgres
+  echo "Using default DB_PASSWORD=postgres"
+fi
+
+# Build and start the containers
+echo "Building production containers..."
+docker-compose -f docker-compose.prod.yml build
+
+echo "Starting production environment..."
+docker-compose -f docker-compose.prod.yml up "$@"

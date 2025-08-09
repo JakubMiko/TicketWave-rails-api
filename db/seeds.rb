@@ -1,5 +1,9 @@
 require 'open-uri'
 
+I18n.locale = :en
+I18n.default_locale = :en
+
+
 # Uncomment the following line if you want to clean the database before seeding
 # Ticket.delete_all
 # Order.delete_all

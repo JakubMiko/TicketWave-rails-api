@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+# Install bundler
+gem install bundler
+
+# Install gems
+bundle check || bundle install
+
+# Remove server.pid
+rm -f /rails/tmp/pids/server.pid
+
+# Setup database
+if [ "${1}" == "rails" ] && [ "${2}" == "server" ]; then
+  bundle exec rails db:prepare || echo "Failed to prepare database"
+  bundle exec rails tailwindcss:build || echo "Failed to build Tailwind CSS"
+  exec bundle exec rails server -b 0.0.0.0 -p 3000
+else
+  exec bundle exec "$@"
+fi

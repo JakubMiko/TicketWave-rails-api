@@ -1,54 +1,14 @@
-// Define variables first
-$purple: #7d3cff;
-$primary: $purple;
-
-// Use stable @import syntax
-@import "bulma";
 
 :root {
-    --primary-color: #f8f0ff; /* Bardzo jasny fiolet */
-    --secondary-color: #5a0e8a; /* Ciemniejszy fiolet dla lepszego kontrastu */
-    --text-color: #2a2a2a; /* Ciemny tekst na jasnym tle */
-    --link-color: #5a0e8a; /* Kolor linków */
-  }
+  --primary-color: #f8f0ff;
+  --secondary-color: #5a0e8a;
+  --text-color: #2a2a2a;
+  --link-color: #5a0e8a;
+}
 
-  [data-theme="dark"] {
-    --primary-color: #121212; /* Ciemniejsze tło w trybie ciemnym */
-    --secondary-color: #b388ff; /* Jaśniejszy fiolet dla lepszego kontrastu w trybie ciemnym */
-    --text-color: #e6e6e6; /* Jaśniejszy tekst na ciemnym tle */
-    --link-color: #bb86fc; /* Jaśniejszy kolor linków w trybie ciemnym */
-  }
-
-  body {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-  }
-
-  /* Styl dla .navbar i .footer w trybie light */
-  .navbar, .footer {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-  }
-
-  /* Styl dla .navbar i .footer w trybie dark */
-  [data-theme="dark"] .navbar,
-  [data-theme="dark"] .footer {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-  }
-
-  .image img.is-slightly-rounded {
-    border-radius: 4px !important;
-  }
-
-  .footer {
-    .content {
-      strong {
-        color: #5a0e8a;
-        font-weight: 600;
-      }
-      p {
-        color: #333;
-      }
-    }
-  }
+[data-theme="dark"] {
+  --primary-color: #121212;
+  --secondary-color: #b388ff;
+  --text-color: #e6e6e6;
+  --link-color: #bb86fc;
+}

@@ -19,6 +19,13 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Add Node.js repository and install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y nodejs && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
@@ -45,11 +52,15 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
+# Install npm packages and create empty tailwind.css
+RUN mkdir -p ./app/assets/builds && \
+    echo "/* Empty Tailwind CSS file */" > ./app/assets/builds/tailwind.css
+
+# Try Rails-native way to build Tailwind
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails tailwindcss:build || echo "Failed to build Tailwind with Rails, using empty file"
+
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-
 
 # Final stage for app image
 FROM base

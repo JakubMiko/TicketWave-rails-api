@@ -42,7 +42,7 @@ TicketWave is a comprehensive event ticketing platform that allows users to disc
 ### Frontend
 - **Hotwire (Turbo & Stimulus)**: Modern, minimal-JavaScript approach
 - **Importmap Rails**: JavaScript module management
-- **Bulma CSS Framework**: Responsive UI design
+- **Tailwind CSS Framework**: Responsive UI design
 - **Dart Sass**: CSS preprocessing
 - **ViewComponents**: Component-based UI architecture
 

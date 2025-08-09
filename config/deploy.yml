@@ -51,6 +51,7 @@ env:
       DB_USER: postgres
       DB_NAME: ticket_wave_production
       RAILS_LOG_TO_STDOUT: "true"
+      RAILS_SERVE_STATIC_FILES: "true"
   secret:
     - RAILS_MASTER_KEY
     - DB_PASSWORD
@@ -113,7 +114,7 @@ accessories:
   db:
     image: postgres:15
     host: 165.227.167.239
-    port: 5432:5432
+    port: 5432
     env:
       clear:
         POSTGRES_USER: postgres
@@ -123,3 +124,4 @@ accessories:
 
 volumes:
   - "postgres_data:/var/lib/postgresql/data"
+  - "storage_data:/rails/storage"
