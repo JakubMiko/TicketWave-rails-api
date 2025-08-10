@@ -26,5 +26,8 @@ module TicketWave
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Use HAML as the default template engine for ViewComponent
+    config.view_component.default_template_extension = "haml"
   end
 end
