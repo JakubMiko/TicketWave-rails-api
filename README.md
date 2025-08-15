@@ -118,3 +118,18 @@ After tests finish, you can open the coverage report in your browser:
   ```
   xdg-open coverage/index.html
   ```
+
+## 🚀 Deployment
+
+TicketWave uses [Kamal](https://kamal-deploy.org/) for simple Docker-based deployment to your own server.
+
+- To build and push the Docker image to the registry:
+  ```sh
+  kamal build push
+  ```
+- To deploy the latest image to your server:
+  ```sh
+  kamal deploy
+  ```
+
+After running each command, you will be prompted for the application password, which is securely stored
