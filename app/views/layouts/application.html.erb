@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
   <head>
     <%# <script src="https://cdn.tailwindcss.com"></script> %>
     <title><%= content_for(:title) || "TicketWave" %></title>
@@ -17,15 +17,14 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   </head>
-  <body class="is-flex is-flex-direction-column" style="min-height: 110vh;" data-theme="light">
-    <%= render "shared/header" %>
+  <body class="min-h-screen bg-gradient-to-b from-purple-100 to-white">
+    <%# <%= render "shared/header" %>
     <main id="main-content" class="is-flex-grow-1">
-      <div class="container">
-        <%= render "shared/flash_messages" %>
-        <%= yield %>
-      </div>
+      <%= render "shared/flash_messages" %>
+      <%= yield %>
     </main>
-    <%= render "shared/footer" %>
+    <%# <%= render "shared/footer" %>
   </body>
 </html>

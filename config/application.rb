@@ -17,7 +17,7 @@ module TicketWave
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Setting default app language
-    config.i18n.default_locale = :pl
+    config.i18n.default_locale = :en
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -26,8 +26,5 @@ module TicketWave
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    # Use HAML as the default template engine for ViewComponent
-    config.view_component.default_template_extension = "haml"
   end
 end

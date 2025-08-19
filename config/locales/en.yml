@@ -1,31 +1,49 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  landing:
+    hero:
+      headline: "Discover the world of events with"
+      description: "Buy a ticket, sign up, and enjoy unforgettable experiences. Thousands of events are waiting for you!"
+      browse_events: "Browse events"
+      create_account: "Create account"
+      logo: "TicketWave"
+      tagline: "Your event, your wave."
+    events:
+      upcoming_events: "Upcoming Events"
+      details: "Details"
+      see_all: "See all events"
+    features:
+      why: "Why TicketWave?"
+      easy_purchase:
+        title: "Easy Purchase"
+        desc: "Buy tickets in seconds, no unnecessary formalities"
+      mobile_tickets:
+        title: "Mobile Tickets"
+        desc: "All your tickets available in your mobile app"
+      notifications:
+        title: "Notifications"
+        desc: "Get notified about your favorite events"
+      security:
+        title: "Security"
+        desc: "We guarantee secure transactions and data protection"
+    testimonials:
+      title: "What our customers say"
+      list:
+        - name: "Anna Blacksmith"
+          username: "annablacksmith"
+          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=A"
+          content: "TicketWave is the best way to buy tickets. Fast, convenient, and hassle-free. Highly recommended!"
+          stars: 5
+        - name: "Mark Anchor"
+          username: "markanchor"
+          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=M"
+          content: "Thanks to TicketWave, I haven't missed any concerts of my favorite band. Notifications work great!"
+          stars: 4
+          half_star: true
+        - name: "Kate Cherry"
+          username: "katecherry"
+          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=K"
+          content: "Customer service at the highest level. I had a ticket issue that was resolved within minutes!"
+          stars: 5
+    cta:
+      title: "Ready for unforgettable experiences?"
+      button: "Start your adventure"

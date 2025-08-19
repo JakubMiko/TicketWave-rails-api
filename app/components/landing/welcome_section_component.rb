@@ -2,7 +2,5 @@
 
 module Landing
   class WelcomeSectionComponent < BaseComponent
-    def initialize
-    end
   end
 end

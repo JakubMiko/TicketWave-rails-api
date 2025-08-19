@@ -11,15 +11,26 @@ I18n.default_locale = :en
 # Event.delete_all
 # User.delete_all
 
-admin = User.create!(first_name: "Admin", last_name: "User", email: "admin@gmail.com", password: "password", role: :admin)
-regular_user = User.create!(first_name: "Regular", last_name: "User", email: "regular@gmail.com", password: "password", role: :user)
+admin = User.find_or_create_by!(email: "admin@gmail.com") do |u|
+  u.first_name = "Admin"
+  u.last_name = "User"
+  u.password = "password"
+  u.role = :admin
+end
+
+regular_user = User.find_or_create_by!(email: "regular@gmail.com") do |u|
+  u.first_name = "Regular"
+  u.last_name = "User"
+  u.password = "password"
+  u.role = :user
+end
 
 events = []
 
 concert = Event.create!(
-  name: 'Koncert XYZ',
-  description: "Niesamowity koncert zespołu XYZ, który zaskoczy Cię swoją energią i niepowtarzalnym brzmieniem. Zespół XYZ to grupa, która łączy różne gatunki muzyczne, tworząc unikalne kompozycje. Ich koncerty to nie tylko muzyka, ale także niesamowite wizualizacje i kontakt z publicznością.",
-  place: "Arena Warszawa",
+  name: 'XYZ Concert',
+  description: "An amazing concert by the XYZ band, which will surprise you with its energy and unique sound. XYZ is a group that combines different music genres, creating unique compositions. Their concerts are not only about music, but also incredible visuals and interaction with the audience.",
+  place: "Warsaw Arena",
   date: (Time.now + 2.months).change(hour: 19, min: 0, sec: 0),
   category: "music"
 )
@@ -34,9 +45,9 @@ end
 events << concert
 
 theater = Event.create!(
-  name: "Premiera Sztuki ABC",
-  description: "Poruszająca premiera w teatrze, która wprowadzi Cię w świat emocji i refleksji. Sztuka ABC to opowieść o ludzkiej naturze, miłości i poświęceniu. Spektakl wyreżyserowany przez znanego reżysera teatralnego, z udziałem wybitnych aktorów, którzy przeniosą Cię w inny wymiar.",
-  place: "Teatr Narodowy",
+  name: "ABC Play Premiere",
+  description: "A moving theater premiere that will take you into a world of emotions and reflection. ABC is a story about human nature, love, and sacrifice. The play is directed by a renowned theater director and features outstanding actors who will transport you to another dimension.",
+  place: "National Theatre",
   date: (Time.now - 1.month).change(hour: 18, min: 30, sec: 0),
   category: "theater"
 )
@@ -51,9 +62,9 @@ end
 events << theater
 
 sports = Event.create!(
-  name: "Mecz Piłki Nożnej Polska vs. Niemcy",
-  description: "Emocjonujący mecz na stadionie, który przyciągnie uwagę całego kraju. Polska reprezentacja zmierzy się z drużyną niemiecką w kluczowym meczu eliminacyjnym. To spotkanie może zadecydować o awansie do kolejnej fazy rozgrywek. Przyjdź i wspieraj biało-czerwonych w tym ważnym starciu!",
-  place: "Stadion Narodowy",
+  name: "Football Match: Poland vs. Germany",
+  description: "An exciting match at the stadium that will attract the attention of the whole country. The Polish national team will face the German team in a crucial qualifying match. This game may decide advancement to the next stage. Come and support the white-and-reds in this important clash!",
+  place: "National Stadium",
   date: (Time.now + 3.months).change(hour: 20, min: 0, sec: 0),
   category: "sports"
 )
@@ -68,9 +79,9 @@ end
 events << sports
 
 festival = Event.create!(
-  name: "Festiwal Muzyki Klasycznej",
-  description: "Festiwal muzyki klasycznej z udziałem najwybitniejszych orkiestr i solistów z całego świata. Przez tydzień będziesz mógł uczestniczyć w niezapomnianych koncertach muzyki klasycznej, od baroku po współczesność. Wyjątkowe doznania muzyczne w pięknej scenerii.",
-  place: "Filharmonia Narodowa",
+  name: "Classical Music Festival",
+  description: "A classical music festival featuring the greatest orchestras and soloists from around the world. For a week, you can enjoy unforgettable classical music concerts, from baroque to contemporary. Unique musical experiences in a beautiful setting.",
+  place: "National Philharmonic",
   date: (Time.now + 5.months).change(hour: 17, min: 0, sec: 0),
   category: "festival"
 )

@@ -1,0 +1,46 @@
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-12 text-purple-800">
+      <%= t("landing.testimonials.title") %>
+    </h2>
+    <% testimonials = t("landing.testimonials.list") %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
+      <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center border border-purple-100 max-w-xs w-80">
+        <img class="w-14 h-14 rounded-full mb-2 border-2 border-purple-200 object-cover" src="<%= testimonials[0][:avatar] %>" alt="Avatar">
+        <p class="text-base font-bold text-purple-700 mb-0.5"><%= testimonials[0][:name] %></p>
+        <p class="text-xs text-gray-500 mb-2">@<%= testimonials[0][:username] %></p>
+        <p class="text-gray-700 italic mb-2 text-center text-sm line-clamp-3">"<%= testimonials[0][:content] %>"</p>
+        <div class="flex gap-0.5">
+          <% testimonials[0][:stars].times do %>
+            <span class="text-yellow-400 text-sm"><i class="fas fa-star"></i></span>
+          <% end %>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center border border-purple-100 max-w-xs w-80">
+        <img class="w-14 h-14 rounded-full mb-2 border-2 border-purple-200 object-cover" src="<%= testimonials[1][:avatar] %>" alt="Avatar">
+        <p class="text-base font-bold text-purple-700 mb-0.5"><%= testimonials[1][:name] %></p>
+        <p class="text-xs text-gray-500 mb-2">@<%= testimonials[1][:username] %></p>
+        <p class="text-gray-700 italic mb-2 text-center text-sm line-clamp-3">"<%= testimonials[1][:content] %>"</p>
+        <div class="flex gap-0.5">
+          <% testimonials[1][:stars].times do %>
+            <span class="text-yellow-400 text-sm"><i class="fas fa-star"></i></span>
+          <% end %>
+          <% if testimonials[1][:half_star] %>
+            <span class="text-yellow-400 text-sm"><i class="fas fa-star-half-alt"></i></span>
+          <% end %>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center border border-purple-100 max-w-xs w-80">
+        <img class="w-14 h-14 rounded-full mb-2 border-2 border-purple-200 object-cover" src="<%= testimonials[2][:avatar] %>" alt="Avatar">
+        <p class="text-base font-bold text-purple-700 mb-0.5"><%= testimonials[2][:name] %></p>
+        <p class="text-xs text-gray-500 mb-2">@<%= testimonials[2][:username] %></p>
+        <p class="text-gray-700 italic mb-2 text-center text-sm line-clamp-3">"<%= testimonials[2][:content] %>"</p>
+        <div class="flex gap-0.5">
+          <% testimonials[2][:stars].times do %>
+            <span class="text-yellow-400 text-sm"><i class="fas fa-star"></i></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

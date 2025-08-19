@@ -2,7 +2,5 @@
 
 module Landing
   class ActionButtonComponent < BaseComponent
-    def initialize
-    end
   end
 end
