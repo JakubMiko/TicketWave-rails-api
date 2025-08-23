@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
 @layer utilities {
-  .animate-spin-slow {
-    animation: spin 12s linear infinite;
+  .animate-spin-fast {
+    animation: spin 3s linear infinite;
   }
+  .animate-scale-pulse {
+    animation: scalePulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes scalePulse {
+  0%, 100% { transform: scale(1);}
+  50% { transform: scale(1.15);}
 }

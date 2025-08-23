@@ -1,66 +1,30 @@
 <header class="w-full sticky top-0 z-40 backdrop-blur bg-white/70 shadow-sm border-b border-purple-100">
-  <nav class="navbar max-w-7xl mx-auto px-4" role="navigation" aria-label="main navigation" data-controller="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        <span class="has-text-weight-bold is-size-4">
-          <span class="has-text-primary"><%= t("shared.header.brand_ticket") %></span><span class="has-text-gray"><%= t("shared.header.brand_wave") %></span>
-        </span>
-      </a>
-      <!-- Hamburger menu -->
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->navbar#toggle" data-navbar-target="burger">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-    <!-- Menu -->
-    <div id="navbarBasicExample" class="navbar-menu" data-navbar-target="menu">
-      <div class="navbar-start is-flex is-justify-content-center" style="flex-grow: 1;">
-        <a class="navbar-item" href="/events">
-          <%= t("shared.header.events") %>
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center py-4">
+      <div class="mr-auto">
+        <a href="/" class="font-extrabold text-2xl text-purple-700">
+          Ticket<span class="text-gray-700">Wave</span>
         </a>
+      </div>
+      <div class="flex items-center gap-4">
         <% if helpers.admin_signed_in? %>
-          <a class="navbar-item" href="<%= admins_dashboard_path %>"><%= t("shared.header.admin_panel") %></a>
-          <a class="navbar-item" href="<%= orders_path %>"><%= t("shared.header.my_orders") %></a>
+          <a href="<%= admins_dashboard_path %>" class="text-base font-medium hover:text-purple-700">Admin Panel</a>
+          <a href="<%= orders_path %>" class="text-base font-medium hover:text-purple-700">My Orders</a>
+          <span class="ml-2">Hello, <%= current_admin.first_name %>! <span class="font-bold">(A)</span></span>
+          <%= button_to "Log out", destroy_admin_session_path, method: :delete, class: "button is-light ml-2" %>
         <% elsif helpers.user_signed_in? %>
-          <a class="navbar-item" href="<%= users_dashboard_path %>"><%= t("shared.header.user_panel") %></a>
-          <a class="navbar-item" href="<%= orders_path %>"><%= t("shared.header.my_orders") %></a>
+          <a href="<%= users_dashboard_path %>" class="text-base font-medium hover:text-purple-700">User Panel</a>
+          <a href="<%= orders_path %>" class="text-base font-medium hover:text-purple-700">My Orders</a>
+          <span class="ml-2">Hello, <%= current_user.first_name %>!</span>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "button is-light ml-2" %>
+        <% else %>
+          <a class="px-4 py-2 bg-purple-700 text-white rounded-full font-semibold hover:bg-purple-800 transition" href="<%= new_user_registration_path %>">Sign up</a>
+          <a class="px-4 py-2 bg-white text-purple-700 border border-purple-700 rounded-full font-semibold hover:bg-purple-50 transition" href="<%= new_user_session_path %>">Log in</a>
+          <a class="flex items-center justify-center rounded-full border border-gray-300 p-2" href="<%= new_admin_session_path %>">
+            <img src="<%= asset_path('lifebuoy_icon.svg') %>" alt="Log in as admin" width="24" height="24">
+          </a>
         <% end %>
       </div>
-      <div class="navbar-end">
-        <div class="navbar-item is-flex is-align-items-center is-justify-content-space-between" style="width: 100%;">
-          <!-- Ikona trybu -->
-          <button data-controller="theme" data-action="click->theme#toggle" class="button is-light">
-            <img src="<%= asset_path('sun_icon.svg') %>" alt="<%= t("shared.header.toggle_theme") %>" width="24" height="24">
-          </button>
-          <!-- Powitanie i przycisk wylogowania -->
-          <% if helpers.admin_signed_in? %>
-            <p class="ml-3">
-              <%= t("shared.header.greeting") %>, <%= current_admin.first_name %>! <span class="has-text-weight-bold">(A)</span>
-            </p>
-            <%= button_to t("shared.header.logout"), destroy_admin_session_path, method: :delete, class: "button is-light ml-3" %>
-          <% elsif helpers.user_signed_in? %>
-            <p class="ml-3">
-              <%= t("shared.header.greeting") %>, <%= current_user.first_name %>!
-            </p>
-            <%= button_to t("shared.header.logout"), destroy_user_session_path, method: :delete, class: "button is-light ml-3" %>
-          <% else %>
-            <div class="buttons is-flex is-justify-content-space-between">
-              <a class="button is-primary ml-3" href="<%= new_user_registration_path %>">
-                <strong><%= t("shared.header.register") %></strong>
-              </a>
-              <a class="button is-light ml-3" href="<%= new_user_session_path %>">
-                <%= t("shared.header.login") %>
-              </a>
-              <button class="button is-light is-rounded is-flex is-align-items-center is-justify-content-center ml-3">
-                <a href="<%= new_admin_session_path %>" class="is-flex is-align-items-center is-justify-content-center" style="width: 24px; height: 24px;">
-                  <img src="<%= asset_path('lifebuoy_icon.svg') %>" alt="<%= t("shared.header.admin_login") %>" width="24" height="24">
-                </a>
-              </button>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </header>
