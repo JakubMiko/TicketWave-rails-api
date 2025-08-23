@@ -47,3 +47,7 @@ en:
     cta:
       title: "Ready for unforgettable experiences?"
       button: "Start your adventure"
+  shared:
+    footer:
+      application_name: "TicketWave"
+      rights_reserved: "by Jakub Mikołajczyk. All rights reserved."
