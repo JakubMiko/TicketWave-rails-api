@@ -23,7 +23,7 @@
         <% if helpers.admin_signed_in? %>
           <a href="<%= admins_dashboard_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">Admin Panel</a>
           <a href="<%= orders_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">My Orders</a>
-          <span class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 ml-0 md:ml-2 block md:inline text-center">Hello, <%= current_admin.first_name %>! <span class="font-bold">(A)</span></span>
+          <span class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 ml-0 md:ml-2 block md:inline text-center">Hello, <%= helpers.current_admin.first_name %>! <span class="font-bold">(A)</span></span>
           <%= button_to "Log out", destroy_admin_session_path, method: :delete, class: "w-4/5 mx-auto md:w-auto md:mx-0 button is-light block md:inline text-center py-2 rounded-lg bg-purple-50 md:bg-transparent" %>
         <% elsif helpers.user_signed_in? %>
           <a href="<%= users_dashboard_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">User Panel</a>
