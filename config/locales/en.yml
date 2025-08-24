@@ -21,6 +21,15 @@ en:
           password_confirmation: "Confirm password"
           password_confirmation_placeholder: "Confirm your password"
           submit: "Sign up"
+        dashboard:
+          title: "User Dashboard"
+          my_events: "My Events"
+          my_events_description: "Browse your events."
+          statistics: "Statistics"
+          statistics_description: "View your statistics."
+          recent_events: "Recent Events"
+          total_events: "Total events"
+          total_tickets: "Total tickets"
     admins:
       sessions:
           title: "Sign in as Administrator"

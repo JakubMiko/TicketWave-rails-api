@@ -10,7 +10,11 @@ module Users
         total_tickets: Ticket.where(user_id: current_user.id).count
       }
 
-      render "users/dashboard/show", locals: { events: events, statistics: statistics }
+      render Users::Dashboard::ShowComponent.new(
+        events: events,
+        statistics: statistics,
+        current_user: current_user
+      )
     end
 
     private
