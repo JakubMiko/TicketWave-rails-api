@@ -21,6 +21,20 @@ en:
         password_confirmation: "Confirm password"
         password_confirmation_placeholder: "Confirm your password"
         submit: "Sign up as Administrator"
+    dashboard:
+      admin_dashboard: "Admin Dashboard"
+      manage_events: "Manage Events"
+      go_to_events: "Go to events"
+      manage_users: "Manage users"
+      go_to_users: "Go to users"
+      browse_and_manage: "Browse and manage user accounts"
+      statistics: "Statistics"
+      go_to_statistics: "Go to statistics"
+      recent_events: "Recent Events"
+      recent_users: "Recent Users"
+      total_events: "Total events"
+      total_users: "Total users"
+      total_admins: "Total admins"
     shared:
       links:
         sign_in: "Sign in to your account"
@@ -51,29 +65,3 @@ en:
       security:
         title: "Security"
         desc: "We guarantee secure transactions and data protection"
-    testimonials:
-      title: "What our customers say"
-      list:
-        - name: "Anna Blacksmith"
-          username: "annablacksmith"
-          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=A"
-          content: "TicketWave is the best way to buy tickets. Fast, convenient, and hassle-free. Highly recommended!"
-          stars: 5
-        - name: "Mark Anchor"
-          username: "markanchor"
-          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=M"
-          content: "Thanks to TicketWave, I haven't missed any concerts of my favorite band. Notifications work great!"
-          stars: 4
-          half_star: true
-        - name: "Kate Cherry"
-          username: "katecherry"
-          avatar: "https://placehold.co/128/7957d5/FFFFFF?text=K"
-          content: "Customer service at the highest level. I had a ticket issue that was resolved within minutes!"
-          stars: 5
-    cta:
-      title: "Ready for unforgettable experiences?"
-      button: "Start your adventure"
-  shared:
-    footer:
-      application_name: "TicketWave"
-      rights_reserved: "by Jakub Mikołajczyk. All rights reserved."
