@@ -1,4 +1,16 @@
 en:
+  devise:
+    admins:
+      sessions:
+          title: "Sign in as Administrator"
+          email: "Email"
+          password: "Password"
+          remember_me: "Remember me"
+          submit: "Sign in"
+    shared:
+      links:
+        sign_in: "Sign in to your account"
+        sign_up: "Create a new account"
   landing:
     hero:
       headline: "Discover the world of events with"

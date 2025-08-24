@@ -11,13 +11,13 @@ module Ui
       @alert_classes =
         case variant
         when :notice
-          "border-info/50 text-info dark:border-info [&>svg]:text-info"
+          "border-blue-300 bg-blue-50 text-blue-800"
         when :error
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive"
+          "border-red-300 bg-red-50 text-red-800"
         when :success
-          "border-success/50 text-success dark:border-success [&>svg]:text-success"
+          "border-green-300 bg-green-50 text-green-800"
         when :alert
-          "border-attention/50 text-attention dark:border-attention [&>svg]:text-attention"
+          "border-yellow-300 bg-yellow-50 text-yellow-800"
         end
 
       @alert_testid =
@@ -34,10 +34,10 @@ module Ui
 
       @title =
         case variant
-        when :notice then "Wiadomość"
-        when :error then "Błąd"
-        when :success then "Sukces"
-        when :alert then "Uwaga"
+        when :notice then "Notification"
+        when :error then "Error"
+        when :success then "Success"
+        when :alert then "Caution"
         end
 
       # TODO: remove block argument in case it will turn out to be redundant
