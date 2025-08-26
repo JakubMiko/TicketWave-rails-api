@@ -1,0 +1,47 @@
+<div class="container mx-auto max-w-xl py-10">
+  <div class="bg-white rounded-2xl shadow-xl p-8">
+    <h1 class="text-2xl font-bold text-purple-800 mb-2"><%= event.new_record? ? t("events.form.new_title") : t("events.form.edit_title") %></h1>
+    <p class="text-gray-500 mb-6"><%= event.new_record? ? t("events.form.new_subtitle") : t("events.form.edit_subtitle") %></p>
+    <%= form_with model: event, url: url, method: method, local: true, multipart: true do |form| %>
+      <% if event.errors.any? %>
+        <div class="bg-red-100 text-red-700 rounded p-4 mb-4">
+          <h2 class="font-bold mb-2"><%= t("events.form.errors", count: event.errors.count) %></h2>
+          <ul class="list-disc pl-5">
+            <% event.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="mb-4">
+        <%= form.label :name, t("events.form.name"), class: "block font-semibold mb-1" %>
+        <%= form.text_field :name, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :description, t("events.form.description"), class: "block font-semibold mb-1" %>
+        <%= form.text_area :description, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :place, t("events.form.place"), class: "block font-semibold mb-1" %>
+        <%= form.text_field :place, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :date, t("events.form.date"), class: "block font-semibold mb-1" %>
+        <%= form.datetime_local_field :date, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :category, t("events.form.category"), class: "block font-semibold mb-1" %>
+        <%= form.select :category, Event.categories.map { |key, value| [value.humanize, key] }, { prompt: t("events.form.category_prompt") }, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :image, t("events.form.image"), class: "block font-semibold mb-1" %>
+        <%= form.file_field :image, class: "block w-full text-gray-700" %>
+        <p class="text-xs text-gray-400 mt-1"><%= t("events.form.image_help") %></p>
+      </div>
+      <div class="flex gap-4 mt-6">
+        <%= form.submit event.new_record? ? t("events.form.submit_new") : t("events.form.submit_edit"), class: "px-6 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold transition" %>
+        <%= link_to t("events.form.cancel"), events_path, class: "px-6 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition" %>
+      </div>
+    <% end %>
+  </div>
+</div>

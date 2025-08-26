@@ -118,6 +118,28 @@ en:
       title: "Ready for unforgettable experiences?"
       button: "Start your adventure"
   events:
+    edit:
+      past_event_error: "You cannot edit events that have already taken place."
+      not_found: "Event not found."
+    create:
+      success: "Event has been created."
+    form:
+      new_title: "Add new event"
+      edit_title: "Edit event"
+      new_subtitle: "Fill in the fields to add a new event"
+      edit_subtitle: "Edit the details of your event"
+      errors: "%{count} error(s) prevented this event from being saved:"
+      name: "Event name"
+      description: "Description"
+      place: "Place"
+      date: "Date and time"
+      category: "Category"
+      category_prompt: "- Select category -"
+      image: "Event image"
+      image_help: "Choose an image for the event. Supported formats: JPG, PNG, GIF."
+      submit_new: "Add event"
+      submit_edit: "Update event"
+      cancel: "Cancel"
     destroy:
       title: "Delete event"
       confirm: "Are you sure you want to delete the event \"%{name}\"?"

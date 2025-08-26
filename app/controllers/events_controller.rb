@@ -23,11 +23,11 @@ class EventsController < ApplicationController
   def new
     event = Event.new
 
-    render :new, locals: { event: event }, status: :ok
+    render Events::FormComponent.new(event: event), status: :ok
   end
 
   def create
-    service = CreateEventService.call(params: event_params)
+    service = Events::Create.call(params: event_params)
 
     if service.success?
       redirect_to events_path, notice: "Wydarzenie zostało dodane."
@@ -41,12 +41,16 @@ class EventsController < ApplicationController
 
     if event
       unless event.past?
-        render :edit, locals: { event: event }, status: :ok
+        render Events::FormComponent.new(
+          event: event,
+          url: event_path(event),
+          method: :patch
+        ), status: :ok
       else
-        redirect_to events_path, alert: "Nie można edytować wydarzeń, które już się odbyły."
+        redirect_to events_path, alert: t("events.edit.past_event_error")
       end
     else
-      redirect_to events_path, alert: "Wydarzenie nie zostało znalezione."
+      redirect_to events_path, alert: t("events.edit.not_found")
     end
   end
 
@@ -59,9 +63,13 @@ class EventsController < ApplicationController
 
       if result.success?
         if event.update(event_params)
-          redirect_to events_path, notice: "Wydarzenie zostało zaktualizowane."
+          redirect_to events_path, notice: t("events.update.success")
         else
-          render :edit, locals: { event: event }, status: :unprocessable_entity
+          render Events::FormComponent.new(
+            event: event,
+            url: event_path(event),
+            method: :patch
+          ), status: :unprocessable_entity
         end
       else
         result.errors.to_h.each do |key, messages|
@@ -74,7 +82,11 @@ class EventsController < ApplicationController
           end
         end
 
-        render :edit, locals: { event: event }, status: :unprocessable_entity
+        render Events::FormComponent.new(
+          event: event,
+          url: event_path(event),
+          method: :patch
+        ), status: :unprocessable_entity
       end
     else
       render :not_found, status: :not_found

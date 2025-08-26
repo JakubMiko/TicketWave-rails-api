@@ -29,13 +29,13 @@ module Events
             event.errors.add(key.presence || :base, message)
           end
         end
-        @errors = event.errors.full_messages
+        errors.concat(event.errors.full_messages)
       end
     end
 
     def save_event
       unless event.save
-        @errors = event.errors.full_messages
+        errors.concat(event.errors.full_messages)
       end
     end
   end
