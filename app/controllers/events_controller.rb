@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   def new
     event = Event.new
 
-    render Events::DestroyComponent.new(event: event), status: :ok
+    render :new, locals: { event: event }, status: :ok
   end
 
   def create
@@ -85,7 +85,7 @@ class EventsController < ApplicationController
     service = Events::Destroy.call(event_id: params[:id])
 
     if service.success?
-      redirect_to events_path, notice: "Wydarzenie zostało usunięte."
+      redirect_to events_path, notice: t("events.destroy.success")
     else
       render :not_found, locals: { errors: service.errors }, status: :not_found
     end

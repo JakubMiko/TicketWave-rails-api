@@ -20,7 +20,7 @@ module Events
 
     def find_event(event_id)
       event = Event.find_by(id: event_id)
-      errors << "Wydarzenie nie zostało znalezione." unless event
+      errors << "Event not found." unless event
       event
     end
 
