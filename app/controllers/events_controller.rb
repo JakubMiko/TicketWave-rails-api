@@ -14,15 +14,7 @@ class EventsController < ApplicationController
     event = Event.includes(:ticket_batches).find(params[:id])
 
     if event
-      respond_to do |format|
-        format.html do
-          if request.xhr?
-            render partial: "events/ticket_batches_list", locals: { event: event.reload }
-          else
-            render :show, locals: { event: event }, status: :ok
-          end
-        end
-      end
+      render Events::ShowComponent.new(event: event, current_user: current_user), status: :ok
     else
       render :not_found, status: :not_found
     end
