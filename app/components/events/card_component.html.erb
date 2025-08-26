@@ -15,12 +15,14 @@
       <i class="fa-solid fa-calendar-days text-purple-400"></i>
       <span><%= event.date.strftime("%d-%m-%Y %H:%M") %></span>
     </div>
-    <span class="inline-block bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded mb-2 w-fit"><%= Event.categories[event.category] %></span>
-    <% if event.past? %>
-      <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded w-fit mb-2"><%= t("events.card_component.status.past") %></span>
-    <% else %>
-      <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded w-fit mb-2"><%= t("events.card_component.status.active") %></span>
-    <% end %>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="inline-block bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded mb-2 w-fit"><%= Event.categories[event.category] %></span>
+      <% if event.past? %>
+        <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded w-fit mb-2"><%= t("events.card_component.status.past") %></span>
+      <% else %>
+        <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded w-fit mb-2"><%= t("events.card_component.status.active") %></span>
+      <% end %>
+    </div>
     <div class="mt-auto flex flex-col gap-2">
       <%= link_to "Details", event_path(event), class: "block w-full text-center py-2 rounded bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold transition" %>
       <% if current_user&.admin? %>

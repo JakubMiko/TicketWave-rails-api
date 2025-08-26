@@ -7,14 +7,14 @@ class Event < ApplicationRecord
   scope :past, -> { where("date <= ?", DateTime.now).order(date: :desc) }
 
   enum :category, {
-    music: "muzyka",
-    theater: "teatr",
-    sports: "sport",
-    comedy: "komedia",
-    conference: "konferencja",
-    festival: "festiwal",
-    exhibition: "wystawa",
-    other: "inne"
+    music: "music",
+    theater: "theater",
+    sports: "sports",
+    comedy: "comedy",
+    conference: "conference",
+    festival: "festival",
+    exhibition: "exhibition",
+    other: "other"
   }
 
   def past?
