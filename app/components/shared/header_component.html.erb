@@ -21,10 +21,34 @@
         data-navbar-target="menu"
       >
         <% if helpers.admin_signed_in? %>
-          <a href="<%= admins_dashboard_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">Admin Panel</a>
-          <a href="<%= orders_path %>" class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 text-base font-medium hover:text-purple-700 block text-center py-2 rounded-lg bg-purple-50 md:bg-transparent">My Orders</a>
-          <span class="w-4/5 mx-auto mb-2 md:w-auto md:mx-0 md:mb-0 ml-0 md:ml-2 block md:inline text-center">Hello, <%= helpers.current_admin.first_name %>! <span class="font-bold">(A)</span></span>
-          <%= button_to "Log out", destroy_admin_session_path, method: :delete, class: "w-4/5 mx-auto md:w-auto md:mx-0 button is-light block md:inline text-center py-2 rounded-lg bg-purple-50 md:bg-transparent" %>
+          <div class="hidden md:flex w-full items-center justify-between gap-4">
+            <div class="flex-1 flex justify-center gap-6">
+              <a href="<%= admins_dashboard_path %>" class="text-base font-medium text-purple-800 hover:text-purple-600 transition">Admin Panel</a>
+              <a href="<%= orders_path %>" class="text-base font-medium text-purple-800 hover:text-purple-600 transition">My Orders</a>
+            </div>
+            <div class="flex items-center gap-3 border-l border-purple-200 pl-6 ml-4">
+              <span class="flex items-center text-gray-700 gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l8 4v5c0 5.25-3.5 10-8 10S4 17.25 4 12V7l8-4z" />
+                </svg>
+                Hello, <%= helpers.current_admin.first_name %>!
+              </span>
+              <%= button_to "Log out", destroy_admin_session_path, method: :delete,
+                    class: "px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold transition shadow" %>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2 md:hidden w-full">
+            <a href="<%= admins_dashboard_path %>" class="text-base font-medium text-purple-800 hover:text-purple-600 transition text-center py-2 rounded-lg bg-purple-50">Admin Panel</a>
+            <a href="<%= orders_path %>" class="text-base font-medium text-purple-800 hover:text-purple-600 transition text-center py-2 rounded-lg bg-purple-50">My Orders</a>
+            <span class="flex items-center justify-center text-gray-700 gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l8 4v5c0 5.25-3.5 10-8 10S4 17.25 4 12V7l8-4z" />
+              </svg>
+              Hello, <%= helpers.current_admin.first_name %>!
+            </span>
+            <%= button_to "Log out", destroy_admin_session_path, method: :delete,
+                  class: "w-4/5 mx-auto px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold transition shadow block" %>
+          </div>
         <% elsif helpers.user_signed_in? %>
           <div class="hidden md:flex w-full items-center justify-between gap-4">
             <div class="flex-1 flex justify-center gap-6">
