@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   def new
     event = Event.new
 
-    render :new, locals: { event: event }, status: :ok
+    render Events::DestroyComponent.new(event: event), status: :ok
   end
 
   def create

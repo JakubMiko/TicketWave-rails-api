@@ -118,6 +118,12 @@ en:
       title: "Ready for unforgettable experiences?"
       button: "Start your adventure"
   events:
+    destroy:
+      title: "Delete event"
+      confirm: "Are you sure you want to delete the event \"%{name}\"?"
+      delete: "Delete"
+      cancel: "Cancel"
+      confirm_button: "Are you sure you want to delete this event?"
     show:
       details: "Event details"
       description: "Description"
