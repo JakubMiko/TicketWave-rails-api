@@ -1,0 +1,46 @@
+<div class="overflow-x-auto rounded-2xl shadow-2xl bg-white mb-32 px-6 min-h-[70vh]">
+  <table class="min-w-full divide-y divide-purple-100">
+    <thead>
+      <tr class="bg-gradient-to-r from-purple-100 to-purple-50 text-purple-800 uppercase text-xs tracking-wider">
+        <th class="px-10 py-6 text-left"><%= t("events.list_component.name") %></th>
+        <th class="px-10 py-6 text-left"><%= t("events.list_component.place") %></th>
+        <th class="px-10 py-6 text-left"><%= t("events.list_component.date") %></th>
+        <th class="px-10 py-6 text-left"><%= t("events.list_component.category") %></th>
+        <th class="px-10 py-6 text-left"><%= t("events.list_component.status") %></th>
+        <th class="px-10 py-6 text-left"><%= t("events.list_component.actions") %></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-purple-50 text-base">
+      <% events.each do |event| %>
+        <tr class="hover:bg-purple-50 transition group">
+          <td class="px-10 py-6 font-semibold text-purple-900 group-hover:text-purple-700"><%= event.name %></td>
+          <td class="px-10 py-6 text-gray-700"><%= event.place %></td>
+          <td class="px-10 py-6 text-gray-700"><%= event.date.strftime("%d-%m-%Y %H:%M") %></td>
+          <td class="px-10 py-6">
+            <span class="inline-block bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded shadow-sm">
+              <%= Event.categories[event.category] %>
+            </span>
+          </td>
+          <td class="px-10 py-6">
+            <% if event.past? %>
+              <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded shadow-sm"><%= t("events.list_component.past") %></span>
+            <% else %>
+              <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded shadow-sm"><%= t("events.list_component.active") %></span>
+            <% end %>
+          </td>
+          <td class="px-10 py-6 flex flex-wrap gap-2">
+            <%= link_to t("events.list_component.details"), event_path(event), class: "text-purple-700 hover:underline font-semibold" %>
+            <% if current_user&.admin? %>
+              <% unless event.past? %>
+                <%= link_to t("events.list_component.edit"), edit_event_path(event), class: "text-yellow-700 hover:underline font-semibold" %>
+              <% else %>
+                <span class="text-gray-400 font-semibold"><%= t("events.list_component.edit") %></span>
+              <% end %>
+              <%= link_to t("events.list_component.delete"), event_path(event), data: { turbo_method: :delete, turbo_confirm: t("events.list_component.confirm_delete") }, class: "text-red-700 hover:underline font-semibold" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

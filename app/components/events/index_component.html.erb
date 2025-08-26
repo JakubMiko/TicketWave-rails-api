@@ -1,0 +1,27 @@
+<section data-controller="events-view" class="py-8">
+  <h1 class="text-4xl font-extrabold text-purple-800 mb-6 tracking-tight drop-shadow flex justify-center"><%= t("events.index.events") %></h1>
+  <div class="flex justify-center gap-2 mb-6">
+    <button
+      data-action="events-view#showCards"
+      data-events-view-target="cardsBtn"
+      class="px-4 py-2 rounded bg-purple-600 text-white font-semibold transition"
+    >
+      <%= t("events.index.cards") %>
+    </button>
+    <button
+      data-action="events-view#showList"
+      data-events-view-target="listBtn"
+      class="px-4 py-2 rounded bg-gray-200 text-purple-800 font-semibold transition"
+    >
+      <%= t("events.index.list") %>
+    </button>
+  </div>
+  <div data-events-view-target="cards" class="container grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
+    <% events.each do |event| %>
+      <%= render Events::CardComponent.new(event: event, current_user: current_user) %>
+    <% end %>
+  </div>
+  <div data-events-view-target="list" class="container hidden mx-auto">
+    <%= render Events::ListComponent.new(events: events, current_user: current_user) %>
+  </div>
+</section>

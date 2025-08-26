@@ -1,0 +1,37 @@
+<div class="bg-white rounded-2xl shadow-lg flex flex-col h-full border border-gray-100 mx-auto">
+  <% if event.image.attached? %>
+    <div class="aspect-video rounded-t-2xl overflow-hidden">
+      <%= image_tag event.image, alt: event.name, class: "object-cover w-full h-full" %>
+    </div>
+  <% end %>
+  <div class="p-6 flex-1 flex flex-col">
+    <h2 class="text-xl font-bold text-purple-800 mb-1"><%= event.name %></h2>
+    <div class="flex items-center text-gray-500 text-sm mb-2 gap-2">
+      <i class="fa-solid fa-location-dot text-purple-400"></i>
+      <span><%= event.place %></span>
+    </div>
+    <p class="text-gray-700 mb-3 text-sm"><%= truncate(event.description, length: 100) %></p>
+    <div class="flex items-center text-gray-700 text-sm mb-2 gap-2">
+      <i class="fa-solid fa-calendar-days text-purple-400"></i>
+      <span><%= event.date.strftime("%d-%m-%Y %H:%M") %></span>
+    </div>
+    <span class="inline-block bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded mb-2 w-fit"><%= Event.categories[event.category] %></span>
+    <% if event.past? %>
+      <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded w-fit mb-2"><%= t("events.card_component.status.past") %></span>
+    <% else %>
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded w-fit mb-2"><%= t("events.card_component.status.active") %></span>
+    <% end %>
+    <div class="mt-auto flex flex-col gap-2">
+      <%= link_to "Details", event_path(event), class: "block w-full text-center py-2 rounded bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold transition" %>
+      <% if current_user&.admin? %>
+        <% unless event.past? %>
+          <%= link_to t("events.card_component.edit"), edit_event_path(event), class: "block w-full text-center py-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700 font-semibold transition" %>
+        <% else %>
+          <span class="block w-full text-center py-2 rounded bg-gray-50 text-gray-400 font-semibold cursor-not-allowed"><%= t("events.card_component.edit") %></span>
+        <% end %>
+        <%= link_to t("events.card_component.delete"), event_path(event), class: "block w-full text-center py-2 rounded bg-red-50 hover:bg-red-100 text-red-600 font-semibold transition",
+              data: { turbo_method: :delete, turbo_confirm: t("events.card_component.confirm_delete") } %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -3,10 +3,10 @@ class EventsController < ApplicationController
     service = Events::Index.call
 
     if service.success?
-      render :index, locals: { events: service.events }, status: :ok
+      render Events::IndexComponent.new(events: service.events, current_user: current_user), status: :ok
     else
       flash.now[:alert] = service.errors.join(", ")
-      render :index, status: :unprocessable_entity
+      render Events::IndexComponent.new(events: service.events, current_user: current_user), status: :unprocessable_entity
     end
   end
 
@@ -62,7 +62,6 @@ class EventsController < ApplicationController
     event = Event.find_by(id: params[:id])
 
     if event
-      # Walidacja przy użyciu kontraktu
       contract = EventContract.new
       result = contract.call(event_params.to_h)
 
@@ -73,7 +72,6 @@ class EventsController < ApplicationController
           render :edit, locals: { event: event }, status: :unprocessable_entity
         end
       else
-        # Przekazywanie błędów walidacji z kontraktu do modelu
         result.errors.to_h.each do |key, messages|
           Array(messages).each do |message|
             if key.present?
