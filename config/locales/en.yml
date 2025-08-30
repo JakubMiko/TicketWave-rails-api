@@ -205,6 +205,10 @@ en:
       edit: "Edit"
       delete: "Delete"
       confirm_delete: "Are you sure?"
+  orders:
+    index:
+      order_history: "Order History"
+      order_number: "Order Number"
   shared:
     footer:
       application_name: "TicketWave"

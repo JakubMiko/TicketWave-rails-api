@@ -133,16 +133,9 @@ class OrdersController < ApplicationController
   end
 
   def index
-    # Show orders for the current user or admin
-    orders = if user_signed_in?
-               current_user.orders.order(created_at: :desc)
-    elsif admin_signed_in?
-               current_admin.orders.order(created_at: :desc)
-    else
-               []
-    end
+    orders = current_user ? current_user.orders : Order.none
 
-    render :index, locals: { orders: orders }, status: :ok
+    render Orders::IndexComponent.new(orders: orders)
   end
 
   def show
