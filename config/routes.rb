@@ -4,11 +4,6 @@ Rails.application.routes.draw do
     sessions: "users/sessions"
   }
 
-  devise_for :admins, controllers: {
-    registrations: "admins/registrations",
-    sessions: "admins/sessions"
-  }, path: "admins", class_name: "User"
-
   namespace :users do
     get "dashboard", to: "dashboard#show", as: :dashboard
     resource :token, only: [ :show ]

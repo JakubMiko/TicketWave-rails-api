@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   </head>
   <body class="min-h-screen bg-gradient-to-b from-purple-100 to-white">
-    <%= render Shared::HeaderComponent.new %>
+    <%= render Shared::HeaderComponent.new(current_user:) %>
     <div class="grid grid-cols-1 gap-4 m-4">
       <div id="flash-messages">
         <% flash.to_h.each do |variant, description| %>
