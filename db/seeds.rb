@@ -15,14 +15,14 @@ admin = User.find_or_create_by!(email: "admin@gmail.com") do |u|
   u.first_name = "Admin"
   u.last_name = "User"
   u.password = "password"
-  u.role = :admin
+  u.admin = true
 end
 
 regular_user = User.find_or_create_by!(email: "regular@gmail.com") do |u|
   u.first_name = "Regular"
   u.last_name = "User"
   u.password = "password"
-  u.role = :user
+  u.admin = false
 end
 
 events = []

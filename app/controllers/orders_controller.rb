@@ -6,20 +6,11 @@ class OrdersController < ApplicationController
     ticket_batch = TicketBatch.find(params[:ticket_batch_id])
     order = Order.new
 
-    # Check if either a regular user or admin is signed in
-    user = if user_signed_in?
-             current_user
-    elsif admin_signed_in?
-             current_admin
-    else
-             nil
-    end
-
     render :new, locals: {
       event: event,
       ticket_batch: ticket_batch,
       order: order,
-      user: user
+      user: current_user
     }, status: :ok
   end
 

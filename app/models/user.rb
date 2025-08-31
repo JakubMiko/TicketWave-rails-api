@@ -5,9 +5,4 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :tickets
   has_many :orders
-
-  enum :role, {
-    admin: "admin",
-    user: "user"
-  }, default: :user
 end

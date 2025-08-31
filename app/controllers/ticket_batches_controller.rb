@@ -3,7 +3,7 @@ class TicketBatchesController < ApplicationController
     event = Event.find(params[:event_id])
     ticket_batch = TicketBatch.new(event: event)
 
-    render :new, locals: { event: event, ticket_batch: ticket_batch, validation_errors: {} }
+    render TicketBatches::FormComponent.new(event: event, ticket_batch: ticket_batch)
   end
 
   def create
