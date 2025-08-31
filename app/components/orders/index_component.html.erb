@@ -23,15 +23,15 @@
             <td class="px-10 py-4 text-gray-700"><%= order.event.name %></td>
             <td class="px-10 py-4 text-gray-700"><%= order.event.date.strftime("%d.%m.%Y, %H:%M") %></td>
             <td class="px-10 py-4 text-gray-700"><%= order.quantity %></td>
-            <td class="px-10 py-4 text-gray-700"><%= number_to_currency(order.total_price, unit: "PLN", format: "%n %u") %></td>
+            <td class="px-10 py-4 text-gray-700"><%= number_to_currency(order.total_price, unit: "$", format: "%n %u") %></td>
             <td class="px-10 py-4">
               <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded shadow-sm">
-                Purchased
+                <%= t("orders.index_component.purchased") %>
               </span>
             </td>
             <td class="px-10 py-4 text-gray-700"><%= order.created_at.strftime("%d.%m.%Y, %H:%M") %></td>
             <td class="px-10 py-4 mt-4 flex flex-wrap gap-2">
-              <%= link_to "Details", order_path(order), class: "text-purple-700 hover:underline font-semibold" %>
+              <%= link_to t("orders.index_component.details"), order_path(order), class: "text-purple-700 hover:underline font-semibold" %>
             </td>
           </tr>
         <% end %>

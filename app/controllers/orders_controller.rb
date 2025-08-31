@@ -141,13 +141,7 @@ class OrdersController < ApplicationController
   def show
     order = Order.includes(:tickets).find(params[:id])
 
-    if (user_signed_in? && order.user != current_user) &&
-       (admin_signed_in? && order.user != current_admin)
-      redirect_to orders_path, alert: "Nie masz dostępu do tego zamówienia."
-      return
-    end
-
-    render :show, locals: { order: order }, status: :ok
+    render Orders::ShowComponent.new(order: order)
   end
 
   private
