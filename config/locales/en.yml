@@ -184,6 +184,7 @@ en:
       cards: "Cards"
       list: "List"
       events: "Events"
+      create_new_event: "Create new event"
     card_component:
       status:
         past: "Past Event"

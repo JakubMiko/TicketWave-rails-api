@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   def index
     events = Event.upcoming
 
-    render Events::IndexComponent.new(events: events, current_user: current_user), status: :ok
+    render Events::IndexComponent.new(events: events, current_user: current_user, view: params[:view]), status: :ok
   end
 
   def show
@@ -28,20 +28,16 @@ class EventsController < ApplicationController
   end
 
   def edit
-    event = Event.find_by(id: params[:id])
+    event = Event.find(params[:id])
 
-    if event
-      unless event.past?
-        render Events::FormComponent.new(
-          event: event,
-          url: event_path(event),
-          method: :patch
-        ), status: :ok
-      else
-        redirect_to events_path, alert: t("events.edit.past_event_error")
-      end
+    if event.past?
+      redirect_to events_path, alert: t("events.edit.past_event_error")
     else
-      redirect_to events_path, alert: t("events.edit.not_found")
+      render Events::FormComponent.new(
+        event: event,
+        url: event_path(event),
+        method: :patch
+      ), status: :ok
     end
   end
 
@@ -85,12 +81,12 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    service = Events::Destroy.call(event_id: params[:id])
+    event = Event.find(params[:id])
+    event.destroy
 
-    if service.success?
-      redirect_to events_path, notice: t("events.destroy.success")
-    else
-      render :not_found, locals: { errors: service.errors }, status: :not_found
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("event_#{event.id}") }
+      format.html { redirect_to events_path, notice: t("events.destroy.success") }
     end
   end
 
