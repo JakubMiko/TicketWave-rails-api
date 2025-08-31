@@ -1,23 +1,14 @@
 class EventsController < ApplicationController
   def index
-    service = Events::Index.call
+    events = Event.upcoming
 
-    if service.success?
-      render Events::IndexComponent.new(events: service.events, current_user: current_user), status: :ok
-    else
-      flash.now[:alert] = service.errors.join(", ")
-      render Events::IndexComponent.new(events: service.events, current_user: current_user), status: :unprocessable_entity
-    end
+    render Events::IndexComponent.new(events: events, current_user: current_user), status: :ok
   end
 
   def show
     event = Event.includes(:ticket_batches).find(params[:id])
 
-    if event
-      render Events::ShowComponent.new(event: event, current_user: current_user), status: :ok
-    else
-      render :not_found, status: :not_found
-    end
+    render Events::ShowComponent.new(event: event, current_user: current_user), status: :ok
   end
 
   def new
