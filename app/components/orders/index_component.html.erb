@@ -40,7 +40,7 @@
     <% if orders.empty? %>
       <div class="flex justify-center items-center min-h-[30vh]">
         <div class="bg-blue-100 text-blue-800 px-6 py-4 rounded-xl text-lg font-semibold shadow">
-          You have no orders yet.
+          <%= t("orders.index_component.no_orders") %>
         </div>
       </div>
     <% end %>

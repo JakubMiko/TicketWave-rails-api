@@ -209,6 +209,13 @@ en:
     index:
       order_history: "Order History"
       order_number: "Order Number"
+      event: "Event"
+      event_date: "Event Date"
+      tickets: "Tickets"
+      amount: "Amount"
+      status: "Status"
+      purchase_date: "Purchase Date"
+      no_orders: "You have no orders yet"
   shared:
     footer:
       application_name: "TicketWave"
