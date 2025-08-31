@@ -40,7 +40,7 @@
                 <% end %>
                 Hello, <%= current_user.first_name %>!
               </span>
-              <%= button_to "Log out", destroy_user_session_path, method: :delete,
+              <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false },
                     class: "px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold transition shadow" %>
             </div>
           </div>
@@ -60,7 +60,7 @@
               <% end %>
               Hello, <%= current_user.first_name %>!
             </span>
-            <%= button_to "Log out", destroy_user_session_path, method: :delete,
+            <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false },
                   class: "w-4/5 mx-auto px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold transition shadow block" %>
           </div>
         <% else %>

@@ -7,22 +7,8 @@ class Users::SessionsController < Devise::SessionsController
   def new
     self.resource = resource_class.new(sign_in_params)
     respond_to do |format|
-      format.html do
-        render Devise::Users::Sessions::FormComponent.new(
-          resource: resource,
-          resource_name: resource_name,
-          devise_mapping: devise_mapping
-        )
-      end
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "modal-alert",
-          Ui::AlertComponent.new(
-            description: flash[:alert],
-            variant: :error
-          ).render_in(view_context)
-        )
-      end
+      format.html { render_form }
+      format.turbo_stream { render_turbo_alert }
     end
   end
 
@@ -43,7 +29,31 @@ class Users::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
+  def render_form
+    render Devise::Users::Sessions::FormComponent.new(
+      resource: resource,
+      resource_name: resource_name,
+      devise_mapping: devise_mapping
+    )
+  end
+
+  def render_turbo_alert
+    render turbo_stream: turbo_stream.replace(
+      "modal-alert",
+      Ui::AlertComponent.new(
+        description: flash[:alert],
+        variant: :error
+      ).render_in(view_context)
+    )
+  end
+
   def after_sign_in_path_for(resource)
-    users_dashboard_path
+    flash[:notice] = "You have been logged in successfully"
+    current_user.admin? ? admins_dashboard_path : users_dashboard_path
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    flash[:notice] = "You have been logged out successfully"
+    root_path
   end
 end
