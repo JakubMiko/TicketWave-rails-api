@@ -6,10 +6,11 @@ class Users::SessionsController < Devise::SessionsController
   # GET /resource/sign_in
   def new
     self.resource = resource_class.new(sign_in_params)
-    respond_to do |format|
-      format.html { render_form }
-      format.turbo_stream { render_turbo_alert }
-    end
+    render Devise::Users::Sessions::FormComponent.new(
+      resource: resource,
+      resource_name: resource_name,
+      devise_mapping: devise_mapping
+    )
   end
 
   # POST /resource/sign_in
@@ -28,24 +29,6 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
-
-  def render_form
-    render Devise::Users::Sessions::FormComponent.new(
-      resource: resource,
-      resource_name: resource_name,
-      devise_mapping: devise_mapping
-    )
-  end
-
-  def render_turbo_alert
-    render turbo_stream: turbo_stream.replace(
-      "modal-alert",
-      Ui::AlertComponent.new(
-        description: flash[:alert],
-        variant: :error
-      ).render_in(view_context)
-    )
-  end
 
   def after_sign_in_path_for(resource)
     flash[:notice] = "You have been logged in successfully"

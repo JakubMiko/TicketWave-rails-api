@@ -13,70 +13,54 @@ class EventsController < ApplicationController
 
   def new
     event = Event.new
-
-    render Events::FormComponent.new(event: event), status: :ok
+    render Events::FormComponent.new(
+      event: event,
+      url: events_path,
+      method: :post
+    ), status: :ok
   end
 
   def create
     service = Events::Create.call(params: event_params)
-
     if service.success?
-      redirect_to events_path, notice: "Wydarzenie zostało dodane."
+      redirect_to events_path, notice: t("events.create.success")
     else
-      render :new, locals: { event: service.event }, status: :unprocessable_entity
+      flash.now[:alert] = service.errors.join("\n")
+      render Events::FormComponent.new(
+        event: service.event,
+        url: events_path,
+        method: :post
+      ), status: :unprocessable_entity
     end
   end
 
   def edit
     event = Event.find(params[:id])
-
     if event.past?
-      redirect_to events_path, alert: t("events.edit.past_event_error")
-    else
-      render Events::FormComponent.new(
-        event: event,
-        url: event_path(event),
-        method: :patch
-      ), status: :ok
+      redirect_to events_path, alert: t("events.edit.past_event_error") and return
     end
+
+    render Events::FormComponent.new(
+      event: event,
+      url: event_path(event),
+      method: :patch
+    ), status: :ok
   end
 
   def update
     event = Event.find_by(id: params[:id])
+    return render :not_found, status: :not_found unless event
 
-    if event
-      contract = EventContract.new
-      result = contract.call(event_params.to_h)
-
-      if result.success?
-        if event.update(event_params)
-          redirect_to events_path, notice: t("events.update.success")
-        else
-          render Events::FormComponent.new(
-            event: event,
-            url: event_path(event),
-            method: :patch
-          ), status: :unprocessable_entity
-        end
-      else
-        result.errors.to_h.each do |key, messages|
-          Array(messages).each do |message|
-            if key.present?
-              event.errors.add(key, message)
-            else
-              event.errors.add(:base, message)
-            end
-          end
-        end
-
-        render Events::FormComponent.new(
-          event: event,
-          url: event_path(event),
-          method: :patch
-        ), status: :unprocessable_entity
-      end
+    service = Events::Update.call(event: event, params: event_params)
+    if service.success?
+      redirect_to events_path, notice: t("events.update.success")
     else
-      render :not_found, status: :not_found
+      flash.now[:alert] = service.errors.join("\n")
+      render Events::FormComponent.new(
+        event: service.event,
+        url: event_path(event),
+        method: :patch
+      ), status: :unprocessable_entity
     end
   end
 

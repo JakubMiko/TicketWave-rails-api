@@ -21,14 +21,13 @@
   </head>
   <body class="min-h-screen bg-gradient-to-b from-purple-100 to-white">
     <%= render Shared::HeaderComponent.new(current_user:) %>
-    <div class="grid grid-cols-1 gap-4 m-4">
+    <div class="fixed top-26 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-xl pointer-events-none">
       <div id="flash-messages">
         <% flash.to_h.each do |variant, description| %>
           <%= render Ui::AlertComponent.new(variant:, description:) %>
         <% end %>
       </div>
     </div>
-
     <main id="main-content" class="is-flex-grow-1">
       <%= yield %>
     </main>

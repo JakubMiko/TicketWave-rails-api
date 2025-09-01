@@ -2,17 +2,8 @@
   <div class="bg-white rounded-2xl shadow-xl p-8">
     <h1 class="text-2xl font-bold text-purple-800 mb-2"><%= event.new_record? ? t("events.form.new_title") : t("events.form.edit_title") %></h1>
     <p class="text-gray-500 mb-6"><%= event.new_record? ? t("events.form.new_subtitle") : t("events.form.edit_subtitle") %></p>
-    <%= form_with model: event, url: url, method: method, local: true, multipart: true do |form| %>
-      <% if event.errors.any? %>
-        <div class="bg-red-100 text-red-700 rounded p-4 mb-4">
-          <h2 class="font-bold mb-2"><%= t("events.form.errors", count: event.errors.count) %></h2>
-          <ul class="list-disc pl-5">
-            <% event.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+
+    <%= form_with model: event, url: url, method: method, local: true, multipart: true, data: { turbo: false } do |form| %>
       <div class="mb-4">
         <%= form.label :name, t("events.form.name"), class: "block font-semibold mb-1" %>
         <%= form.text_field :name, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>

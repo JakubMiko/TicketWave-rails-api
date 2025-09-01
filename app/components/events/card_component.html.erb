@@ -24,11 +24,11 @@
       <% end %>
     </div>
     <div class="mt-auto flex flex-row gap-6 justify-center">
-      <%= link_to "Details", event_path(event),
+      <%= link_to "Details", event_path(event), target: "_top",
             class: "inline-flex items-center justify-center w-32 text-center py-2 rounded bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold transition" %>
       <% if current_user&.admin? %>
         <% unless event.past? %>
-          <%= link_to t("events.card_component.edit"), edit_event_path(event),
+          <%= link_to t("events.card_component.edit"), edit_event_path(event), target: "_top",
                 class: "inline-flex items-center justify-center w-32 text-center py-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700 font-semibold transition" %>
         <% else %>
           <span class="inline-flex items-center justify-center w-32 text-center py-2 rounded bg-gray-50 text-gray-400 font-semibold cursor-not-allowed"><%= t("events.card_component.edit") %></span>

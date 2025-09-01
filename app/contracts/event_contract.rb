@@ -10,7 +10,7 @@ class EventContract < ApplicationContract
 
     rule(:date) do
       if value && value < DateTime.now
-        key.failure("Data wydarzenia nie może być w przeszłości")
+        key.failure("The event date must be in the future")
       end
     end
 end

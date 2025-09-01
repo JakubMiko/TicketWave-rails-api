@@ -20,7 +20,7 @@
           data: { turbo_frame: "events_view" } %>
     </div>
 
-    <% if params[:view] == 'list' %>
+    <% if params[:view] == "list" %>
       <%= render Events::ListComponent.new(events: events, current_user: current_user) %>
     <% else %>
       <div class="container grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
