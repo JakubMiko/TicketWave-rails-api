@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: [ :new, :create ], unless: :admin_signed_in?
+  before_action :authenticate_user!, except: [ :new, :create ]
 
   def new
     event = Event.find(params[:event_id])
