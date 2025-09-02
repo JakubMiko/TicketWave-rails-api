@@ -13,7 +13,7 @@ export default class extends Controller {
   }
 
   close() {
-    this.element.outerHTML = '<turbo-frame id="modal-alert"></turbo-frame>'
+    this.element.remove()
   }
 
   disconnect() {
