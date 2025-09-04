@@ -1,0 +1,112 @@
+<div class="mx-auto max-w-2xl py-12 px-4 sm:px-8">
+  <h1 class="text-4xl font-extrabold text-center mb-8 text-purple-700">Buy Ticket</h1>
+  <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-purple-100">
+    <h2 class="text-2xl font-semibold mb-2 text-gray-800"><%= event.name %></h2>
+    <p class="text-gray-500 mb-1 flex items-center gap-2">
+      <i class="fa-regular fa-calendar"></i>
+      <%= event.date.strftime("%d.%m.%Y, %H:%M") %>
+      <span class="mx-2">|</span>
+      <i class="fa-solid fa-location-dot"></i>
+      <%= event.place %>
+    </p>
+    <div class="flex flex-wrap gap-6 mt-4">
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">Ticket price:</span>
+        <span class="font-bold text-green-600"><%= number_to_currency(ticket_batch.price, unit: "$", format: "%n %u") %></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">Available:</span>
+        <span class="font-bold text-blue-600"><%= ticket_batch.available_tickets %></span>
+      </div>
+    </div>
+  </div>
+  <%= form_with(model: order, url: orders_path(ticket_batch_id: ticket_batch.id), local: true, class: "space-y-8") do |f| %>
+    <% if order.errors.any? %>
+      <div class="bg-red-50 border border-red-300 text-red-700 px-6 py-4 rounded-lg mb-6 shadow">
+        <h2 class="font-bold mb-2"><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <% order.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div>
+      <%= f.label :quantity, "Number of tickets", class: "block font-semibold mb-2 text-gray-700" %>
+      <div class="relative">
+        <%= f.number_field :quantity,
+          min: 1,
+          max: ticket_batch.available_tickets,
+          value: 1,
+          class: "block w-full rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 text-lg font-semibold text-purple-700 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition placeholder:text-purple-300"
+        %>
+        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-purple-400 pointer-events-none">
+          <i class="fa-solid fa-ticket"></i>
+        </span>
+      </div>
+    </div>
+    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-4 flex items-center justify-between shadow-inner border border-blue-100">
+      <span class="font-semibold text-lg text-gray-700 flex items-center gap-2">
+        <i class="fa-solid fa-wallet text-blue-400"></i>
+        Total price:
+      </span>
+      <span id="total-price" class="text-2xl font-extrabold text-blue-700 tracking-wide drop-shadow">
+        <%= number_to_currency(ticket_batch.price, unit: "$", format: "%n %u") %>
+      </span>
+    </div>
+    <% if helpers.current_user.present? %>
+      <div class="bg-gray-50 rounded-lg p-5 mb-4 border border-gray-200">
+        <h3 class="font-semibold mb-3 text-gray-800">Personal data</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <span class="block text-gray-500 text-sm">Email</span>
+            <span class="font-medium"><%= helpers.current_user&.email %></span>
+          </div>
+          <div>
+            <span class="block text-gray-500 text-sm">First name</span>
+            <span class="font-medium"><%= helpers.current_user&.first_name %></span>
+          </div>
+          <div>
+            <span class="block text-gray-500 text-sm">Last name</span>
+            <span class="font-medium"><%= helpers.current_user&.last_name %></span>
+          </div>
+        </div>
+        <div class="text-xs text-blue-600 mt-3">
+          Tickets will be assigned to your account.
+        </div>
+      </div>
+    <% else %>
+      <div class="bg-gray-50 rounded-lg p-5 mb-4 border border-gray-200">
+        <h3 class="font-semibold mb-3 text-gray-800">Personal data</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1 text-gray-600 font-medium">Email</label>
+            <input type="email" name="guest_email" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" required>
+          </div>
+          <div>
+            <label class="block mb-1 text-gray-600 font-medium">First name</label>
+            <input type="text" name="guest_first_name" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" required>
+          </div>
+          <div>
+            <label class="block mb-1 text-gray-600 font-medium">Last name</label>
+            <input type="text" name="guest_last_name" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" required>
+          </div>
+          <div>
+            <label class="block mb-1 text-gray-600 font-medium">Password</label>
+            <input type="password" name="guest_password" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" required>
+          </div>
+          <div>
+            <label class="block mb-1 text-gray-600 font-medium">Confirm password</label>
+            <input type="password" name="guest_password_confirmation" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" required>
+          </div>
+        </div>
+        <div class="text-xs text-blue-600 mt-3">
+          An account will be created for you and tickets will be assigned to it.
+        </div>
+      </div>
+    <% end %>
+    <div>
+      <%= f.submit "Confirm purchase", class: "w-full py-3 px-6 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg shadow-lg transition" %>
+    </div>
+  <% end %>
+</div>

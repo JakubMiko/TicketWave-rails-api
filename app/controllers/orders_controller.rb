@@ -6,12 +6,11 @@ class OrdersController < ApplicationController
     ticket_batch = TicketBatch.find(params[:ticket_batch_id])
     order = Order.new
 
-    render :new, locals: {
+    render Orders::FormComponent.new(
       event: event,
       ticket_batch: ticket_batch,
-      order: order,
-      user: current_user
-    }, status: :ok
+      order: order
+    ), status: :ok
   end
 
   def create

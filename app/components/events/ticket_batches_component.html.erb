@@ -40,7 +40,7 @@
                     <%= link_to t("events.ticket_batches_list.edit"), edit_event_ticket_batch_path(event, batch), class: "text-yellow-700 hover:underline font-semibold mr-2" %>
                     <%= button_to t("events.ticket_batches_list.delete"), event_ticket_batch_path(event, batch), method: :delete, form: { data: { turbo_confirm: t("events.ticket_batches_list.confirm_delete") } }, class: "text-red-700 hover:underline font-semibold" %>
                   <% else %>
-                    <% if batch.available_tickets > 0 && batch.sale_start <= current_time && batch.sale_end >= current_time && current_user.present? %>
+                    <% if batch.available_tickets > 0 && batch.sale_start <= current_time && batch.sale_end >= current_time %>
                       <%= link_to t("events.ticket_batches_list.buy"), new_ticket_batch_order_path(event_id: event.id, ticket_batch_id: batch.id), class: "text-purple-700 hover:underline font-semibold" %>
                     <% elsif batch.available_tickets <= 0 %>
                       <span class="text-red-500"><%= t("events.ticket_batches_list.no_tickets") %></span>
