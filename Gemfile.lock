@@ -171,6 +171,8 @@ GEM
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
+    foreman (0.90.0)
+      thor (~> 1.4)
     fugit (1.11.2)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -531,6 +533,7 @@ DEPENDENCIES
   devise
   dry-validation
   factory_bot_rails
+  foreman
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

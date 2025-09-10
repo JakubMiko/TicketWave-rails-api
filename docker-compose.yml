@@ -18,6 +18,8 @@ services:
     depends_on:
       - db
     command: ["rails", "server"]
+    tty: true
+    stdin_open: true
 
   db:
     image: postgres:15

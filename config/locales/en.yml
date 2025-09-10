@@ -237,6 +237,20 @@ en:
       ticket_number: "Ticket Number"
       price: "Price"
       back_to_order_history: "Back to order history"
+    form:
+      buy_tickets: "Buy Tickets"
+      ticket_price: "Ticket price"
+      available: "Available"
+      quantity: "Number of tickets"
+      total_price: "Total price"
+      personal_data: "Personal data"
+      email: "Email"
+      first_name: "First name"
+      last_name: "Last name"
+      ticket_assigned: "Tickets will be assigned to your account"
+      password: "Password"
+      password_confirmation: "Confirm password"
+      confirm_purchase: "Confirm purchase"
   shared:
     footer:
       application_name: "TicketWave"

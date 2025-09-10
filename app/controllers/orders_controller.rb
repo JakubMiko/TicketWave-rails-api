@@ -9,7 +9,8 @@ class OrdersController < ApplicationController
     render Orders::FormComponent.new(
       event: event,
       ticket_batch: ticket_batch,
-      order: order
+      order: order,
+      current_user:
     ), status: :ok
   end
 
@@ -17,96 +18,25 @@ class OrdersController < ApplicationController
     ticket_batch = TicketBatch.find(params[:ticket_batch_id])
     event = ticket_batch.event
 
-    quantity = order_params[:quantity].to_i
+    service = Orders::CreateService.new(
+      ticket_batch: ticket_batch,
+      params: order_params,
+      current_user: current_user,
+      guest_params: guest_params,
+      event: event
+    ).call
 
-    if quantity <= 0
-      redirect_to event_path(event), alert: "Nieprawidłowa liczba biletów."
-      return
-    end
-
-    if quantity > ticket_batch.available_tickets
-      redirect_to event_path(event), alert: "Nie ma wystarczającej liczby biletów. Dostępnych: #{ticket_batch.available_tickets}"
-      return
-    end
-
-    order = Order.new(order_params)
-    order.ticket_batch = ticket_batch
-    order.total_price = ticket_batch.price * quantity
-    order.status = "completed"
-
-    if admin_signed_in?
-      # Admin jest zalogowany
-      order.user = current_admin
-    elsif user_signed_in?
-      # Zwykły użytkownik jest zalogowany
-      order.user = current_user
-    elsif params[:guest_email].present? && params[:guest_password].present?
-      # Zakup z utworzeniem konta
-      if params[:guest_password] != params[:guest_password_confirmation]
-        flash.now[:alert] = "Podane hasła nie są identyczne."
-        render :new, locals: { event: event, ticket_batch: ticket_batch, order: order, user: nil }, status: :unprocessable_entity
-        return
-      end
-
-      # Sprawdź, czy użytkownik o podanym emailu już istnieje
-      existing_user = User.find_by(email: params[:guest_email])
-      if existing_user
-        flash.now[:alert] = "Użytkownik z tym adresem email już istnieje. Zaloguj się, aby kontynuować."
-        render :new, locals: { event: event, ticket_batch: ticket_batch, order: order, user: nil }, status: :unprocessable_entity
-        return
-      end
-
-      # Utwórz nowego użytkownika
-      guest_user = User.new(
-        email: params[:guest_email],
-        password: params[:guest_password],
-        password_confirmation: params[:guest_password_confirmation],
-        first_name: params[:guest_first_name],
-        last_name: params[:guest_last_name],
-        role: "user"
-      )
-
-      if guest_user.save
-        sign_in(guest_user)
-        order.user = guest_user
-      else
-        flash.now[:alert] = "Nie udało się utworzyć konta: #{guest_user.errors.full_messages.join(', ')}"
-        render :new, locals: { event: event, ticket_batch: ticket_batch, order: order, user: guest_user }, status: :unprocessable_entity
-        return
-      end
+    if service.success?
+      redirect_to confirmation_order_path(service.order), notice: "Order placed successfully."
     else
-      # Brak danych
-      flash.now[:alert] = "Musisz podać dane osobowe lub zalogować się, aby kupić bilet."
-      render :new, locals: { event: event, ticket_batch: ticket_batch, order: order, user: nil }, status: :unprocessable_entity
-      return
+      flash.now[:alert] = service.errors.join("\n")
+      render Orders::FormComponent.new(
+        event: event,
+        ticket_batch: ticket_batch,
+        order: service.order,
+        current_user: current_user
+      ), status: :unprocessable_entity
     end
-
-    # Proces zamówienia
-    ActiveRecord::Base.transaction do
-      if order.save
-        ticket_batch.available_tickets -= quantity
-        ticket_batch.save!
-
-        quantity.times do
-          ticket = Ticket.new(
-            order: order,
-            user: order.user,
-            event: event,
-            price: ticket_batch.price,
-            ticket_number: "#{event.id}-#{SecureRandom.hex(4)}"
-          )
-          ticket.save!
-        end
-
-        redirect_to confirmation_order_path(order), notice: "Zamówienie zostało złożone pomyślnie."
-      else
-        flash.now[:alert] = "Nie udało się zapisać zamówienia: #{order.errors.full_messages.join(', ')}"
-        render :new, locals: { event: event, ticket_batch: ticket_batch, order: order, user: nil }, status: :unprocessable_entity
-      end
-    end
-  rescue ActiveRecord::RecordInvalid => e
-    flash.now[:alert] = "Wystąpił błąd podczas przetwarzania zamówienia: #{e.message}"
-    render :new, locals: { event: event, ticket_batch: ticket_batch, order: order, user: nil }, status: :unprocessable_entity
   end
 
   def confirmation
@@ -138,5 +68,15 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:quantity)
+  end
+
+  def guest_params
+    params.require(:order).permit(
+      :guest_email,
+      :guest_password,
+      :guest_password_confirmation,
+      :guest_first_name,
+      :guest_last_name
+    )
   end
 end
