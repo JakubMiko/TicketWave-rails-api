@@ -1,48 +1,49 @@
 <div class="max-w-2xl mx-auto mt-8 p-6 bg-green-50 rounded-xl shadow border border-green-200">
   <div class="mb-6">
-    <h1 class="text-3xl font-bold text-green-700 mb-2">Purchase confirmed!</h1>
-    <p class="text-green-900">Thank you for your ticket purchase. Below are your order details.</p>
+    <h1 class="text-3xl font-bold text-green-700 mb-2"><%= t("confirmation.purchase_confirmed") %></h1>
+    <p class="text-green-900"></p>
   </div>
-  <% unless helpers.user_signed_in? %>
+  <% unless user_signed_in? %>
     <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded">
-      <p class="font-semibold text-blue-700 mb-1">Your account has been created!</p>
+      <p class="font-semibold text-blue-700 mb-1"><%= t("confirmation.account_created") %></p>
       <p class="text-blue-800">
-        Based on your details, we've created a user account for you.
-        You can now view your tickets and order history in your
-        <a href="<%= users_dashboard_path %>" class="underline font-semibold">User Panel</a>.
+        <%= t("confirmation.account_info") %>
+        <a href="<%= users_dashboard_path %>" class="underline font-semibold"><%= t("confirmation.user_panel") %></a>.
       </p>
     </div>
   <% end %>
   <div class="mb-6 bg-white rounded-lg shadow p-5 border border-gray-100">
-    <h2 class="text-xl font-semibold mb-4 text-gray-800">Order details #<%= order.id %></h2>
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">
+      <%= t("orders.confirmation.order_details", id: order.id) %>
+    </h2>
     <div class="space-y-2 text-gray-700">
-      <div><span class="font-medium">Event:</span> <%= order.event.name %></div>
-      <div><span class="font-medium">Event date:</span> <%= order.event.date.strftime("%d.%m.%Y, %H:%M") %></div>
-      <div><span class="font-medium">Venue:</span> <%= order.event.place %></div>
-      <div><span class="font-medium">Tickets:</span> <%= order.quantity %></div>
-      <div><span class="font-medium">Ticket price:</span> <%= number_to_currency(order.ticket_batch.price, unit: "$") %></div>
-      <div><span class="font-medium">Total:</span> <%= number_to_currency(order.total_price, unit: "$") %></div>
-      <div><span class="font-medium">Status:</span> <span class="inline-block px-2 py-1 bg-green-200 text-green-800 rounded text-xs">Purchased</span></div>
+      <div><span class="font-medium"><%= t("confirmation.event") %></span> <%= order.event.name %></div>
+      <div><span class="font-medium"><%= t("confirmation.event_date") %>:</span> <%= order.event.date.strftime("%d.%m.%Y, %H:%M") %></div>
+      <div><span class="font-medium"><%= t("confirmation.venue") %>:</span> <%= order.event.place %></div>
+      <div><span class="font-medium"><%= t("confirmation.tickets") %>:</span> <%= order.quantity %></div>
+      <div><span class="font-medium"><%= t("confirmation.ticket_price") %>:</span> <%= number_to_currency(order.ticket_batch.price, unit: "$") %></div>
+      <div><span class="font-medium"><%= t("confirmation.total") %>:</span> <%= number_to_currency(order.total_price, unit: "$") %></div>
+      <div><span class="font-medium"><%= t("confirmation.status") %>:</span> <span class="inline-block px-2 py-1 bg-green-200 text-green-800 rounded text-xs">Purchased</span></div>
     </div>
   </div>
   <div class="mb-6 bg-yellow-50 border border-yellow-200 rounded p-4">
-    <h3 class="font-semibold text-yellow-700 mb-2">Payment information</h3>
-    <p>Please complete your purchase by making a bank transfer to the following account:</p>
+    <h3 class="font-semibold text-yellow-700 mb-2"><%= t("confirmation.payment_info") %></h3>
+    <p><%= t("confirmation.complete_purchase") %></p>
     <div class="mt-2 space-y-1 text-yellow-900">
-      <div><span class="font-medium">Recipient:</span> TicketWave LLC</div>
-      <div><span class="font-medium">Account number:</span> 25 1090 1056 0000 0001 3578 9024</div>
-      <div><span class="font-medium">Transfer title:</span> Order #<%= order.id %> - <%= order.event.name %></div>
-      <div><span class="font-medium">Amount:</span> <%= number_to_currency(order.total_price, unit: "$") %></div>
+      <div><span class="font-medium"><%= t("confirmation.recipient") %>:</span> TicketWave LLC</div>
+      <div><span class="font-medium"><%= t("confirmation.account_number") %>:</span> 25 1090 1056 0000 0001 3578 9024</div>
+      <div><span class="font-medium"><%= t("confirmation.transfer_title") %>:</span> Order #<%= order.id %> - <%= order.event.name %></div>
+      <div><span class="font-medium"><%= t("confirmation.amount") %>:</span> <%= number_to_currency(order.total_price, unit: "$") %></div>
     </div>
-    <p class="mt-2 text-sm">Once your payment is received, your order status will be updated automatically.</p>
+    <p class="mt-2 text-sm"><%= t("confirmation.payment_received") %></p>
   </div>
   <div class="mb-6">
-    <h3 class="text-lg font-semibold mb-2">Your tickets</h3>
+    <h3 class="text-lg font-semibold mb-2"><%= t("confirmation.your_tickets") %></h3>
     <table class="min-w-full bg-white rounded shadow">
       <thead>
         <tr>
-          <th class="py-2 px-4 border-b text-left">Ticket number</th>
-          <th class="py-2 px-4 border-b text-left">Price</th>
+          <th class="py-2 px-4 border-b text-left"><%= t("confirmation.ticket_number") %></th>
+          <th class="py-2 px-4 border-b text-left"><%= t("confirmation.price") %></th>
         </tr>
       </thead>
       <tbody>
@@ -55,18 +56,19 @@
       </tbody>
     </table>
   </div>
-  <div class="flex flex-col sm:flex-row gap-3">
-    <% if helpers.user_signed_in? %>
-      <%= link_to "My orders", orders_path, class: "button bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded" %>
+  <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+    <% if user_signed_in? %>
+      <%= link_to t("confirmation.my_orders"), orders_path, class: "button bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded" %>
     <% else %>
       <div class="bg-blue-50 border border-blue-200 rounded p-3 w-full">
         <p>
-          To view your tickets and orders in the future,
-          <a href="<%= new_user_session_path %>" class="underline font-semibold">log in</a>
-          using your email and password.
+          <%= t(
+            "orders.confirmation.login_info_html",
+            login_link: view_context.link_to(t("orders.confirmation.log_in"), new_user_session_path, class: "underline font-semibold")
+          ).html_safe %>
         </p>
       </div>
     <% end %>
-    <%= link_to "Back to events", events_path, class: "button bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded" %>
+    <%= link_to t("confirmation.back_to_events"), events_path, class: "button bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded" %>
   </div>
 </div>
