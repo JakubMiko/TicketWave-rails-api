@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: [ :new, :create ]
+  before_action :authenticate_user!, except: [ :new, :create, :confirmation ]
 
   def new
     event = Event.find(params[:event_id])
@@ -39,19 +39,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def confirmation
-    order = Order.find(params[:id])
-
-    # Allow both regular users and admins to access their orders
-    if (user_signed_in? && order.user != current_user) &&
-       (admin_signed_in? && order.user != current_admin)
-      redirect_to events_path, alert: "Nie masz dostępu do tego zamówienia."
-      return
-    end
-
-    render :confirmation, locals: { order: order }, status: :ok
-  end
-
   def index
     orders = current_user ? current_user.orders : Order.none
 
@@ -62,6 +49,12 @@ class OrdersController < ApplicationController
     order = Order.includes(:tickets).find(params[:id])
 
     render Orders::ShowComponent.new(order: order)
+  end
+
+  def confirmation
+    order = Order.find(params[:id])
+
+    render Orders::ConfirmationComponent.new(order: order)
   end
 
   private
