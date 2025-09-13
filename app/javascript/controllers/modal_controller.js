@@ -4,20 +4,21 @@ export default class extends Controller {
   static targets = ["modal", "background"];
 
   connect() {
-    this.modalTarget.classList.add("is-active");
-    document.body.classList.add("is-clipped");
+    // Nie blokujemy scrolla strony
+    this.onKeydown = this.onKeydown.bind(this);
+    document.addEventListener("keydown", this.onKeydown);
+  }
+
+  disconnect() {
+    document.removeEventListener("keydown", this.onKeydown);
   }
 
   close(event) {
     if (event) event.preventDefault();
-    this.modalTarget.classList.remove("is-active");
-    document.body.classList.remove("is-clipped");
-
     const frame = document.getElementById("modal_frame");
     if (frame) {
-      setTimeout(() => {
-        frame.innerHTML = "";
-      }, 300);
+      // natychmiast, bez opóźnienia
+      frame.innerHTML = "";
     }
   }
 
@@ -27,7 +28,7 @@ export default class extends Controller {
     }
   }
 
-  disconnect() {
-    document.body.classList.remove("is-clipped");
+  onKeydown(e) {
+    if (e.key === "Escape") this.close();
   }
 }

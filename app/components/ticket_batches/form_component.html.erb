@@ -1,37 +1,39 @@
 <turbo-frame id="modal_frame">
   <div data-controller="modal">
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
-        <div class="flex items-center justify-between px-6 py-4 border-b">
-          <h2 class="text-xl font-bold text-purple-800">Add new ticket batch</h2>
+    <div
+      data-modal-target="background"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-[1px]"
+      data-action="click->modal#closeOnBackgroundClick"
+    >
+      <div
+        data-modal-target="modal"
+        class="bg-white rounded-2xl shadow-xl w-full max-w-lg"
+      >
+        <div class="flex items-center justify-between px-8 py-6 border-b">
+          <h2 class="text-2xl font-bold text-purple-800"><%= ticket_batch.new_record? ? t("ticket_batches.form.new_ticket_batch") : t("ticket_batches.form.edit_ticket_batch") %></h2>
           <button class="text-gray-400 hover:text-gray-700 text-2xl leading-none" aria-label="close" data-action="click->modal#close">&times;</button>
         </div>
-        <div class="px-6 py-6">
-
+        <div class="px-8 py-8">
           <%= form_with model: [event, ticket_batch], local: false, data: { turbo_frame: "modal_frame" } do |form| %>
             <div class="mb-4">
-              <%= form.label :available_tickets, "Available tickets", class: "block font-semibold mb-1" %>
-              <%= form.number_field :available_tickets, class: "input input-bordered w-full" %>
+              <%= form.label :available_tickets, t("ticket_batches.form.available_tickets"), class: "block font-semibold mb-1 text-purple-800" %>
+              <%= form.number_field :available_tickets, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
             </div>
-
             <div class="mb-4">
-              <%= form.label :price, "Ticket price", class: "block font-semibold mb-1" %>
-              <%= form.number_field :price, class: "input input-bordered w-full" %>
+              <%= form.label :price, t("ticket_batches.form.price"), class: "block font-semibold mb-1 text-purple-800" %>
+              <%= form.number_field :price, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
             </div>
-
             <div class="mb-4">
-              <%= form.label :sale_start, "Sale start date", class: "block font-semibold mb-1" %>
-              <%= form.datetime_local_field :sale_start, class: "input input-bordered w-full" %>
+              <%= form.label :sale_start, t("ticket_batches.form.sale_start"), class: "block font-semibold mb-1 text-purple-800" %>
+              <%= form.datetime_local_field :sale_start, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
             </div>
-
             <div class="mb-4">
-              <%= form.label :sale_end, "Sale end date", class: "block font-semibold mb-1" %>
-              <%= form.datetime_local_field :sale_end, class: "input input-bordered w-full" %>
+              <%= form.label :sale_end, t("ticket_batches.form.sale_end"), class: "block font-semibold mb-1 text-purple-800" %>
+              <%= form.datetime_local_field :sale_end, class: "block w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition" %>
             </div>
-
             <div class="flex gap-4 mt-6">
-              <%= form.submit "Save", class: "px-6 py-2 bg-purple-700 text-white font-semibold rounded hover:bg-purple-800 transition" %>
-              <button type="button" class="px-6 py-2 bg-gray-200 text-gray-800 font-semibold rounded hover:bg-gray-300 transition" data-action="click->modal#close">Cancel</button>
+              <%= form.submit(ticket_batch.new_record? ? t("ticket_batches.form.submit_new") : t("ticket_batches.form.submit_edit"), class: "px-6 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold transition") %>
+              <button type="button" class="px-6 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition" data-action="click->modal#close"><%= t("ticket_batches.form.cancel") %></button>
             </div>
           <% end %>
         </div>

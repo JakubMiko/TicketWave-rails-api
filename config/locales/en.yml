@@ -275,6 +275,16 @@ en:
       back_to_events: "Back to events"
       login_info_html: "To view your tickets and orders in the future, %{login_link} using your email and password"
       log_in: "log in"
+  ticket_batches:
+    form:
+      new_ticket_batch: "Add new ticket batch"
+      edit_ticket_batch: "Edit ticket batch"
+      available_tickets: "Available tickets"
+      price: "Price ($)"
+      sale_start: "Sale start date and time"
+      sale_end: "Sale end date and time"
+      submit_new: "Add ticket batch"
+      submit_edit: "Update ticket batch"
   shared:
     footer:
       application_name: "TicketWave"
