@@ -1,8 +1,15 @@
 <div id="event_<%= event.id %>" class="container bg-white rounded-2xl shadow-lg flex flex-col h-full border border-gray-100 mx-auto">
   <% if event.image.attached? %>
-    <div class="aspect-video rounded-t-2xl overflow-hidden">
-      <%= image_tag event.image, alt: event.name, class: "object-cover w-full h-full" %>
-    </div>
+  <div class="aspect-video rounded-t-2xl overflow-hidden">
+    <%= image_tag(
+          event.image.variant(
+            resize_to_fill: [1600, 900, (Rails.application.config.active_storage.variant_processor == :vips ? { crop: :attention } : { gravity: "north" })]
+          ).processed,
+          alt: event.name,
+          class: "object-cover w-full h-full",
+          loading: "lazy"
+        ) %>
+  </div>
   <% end %>
   <div class="p-6 flex-1 flex flex-col">
     <h2 class="text-xl font-bold text-purple-800 mb-1"><%= event.name %></h2>
