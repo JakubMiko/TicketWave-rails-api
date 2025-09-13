@@ -12,13 +12,13 @@ class TicketBatchContract < ApplicationContract
 
   rule(:sale_start, :sale_end) do
     if values[:sale_start] && values[:sale_end] && values[:sale_start] >= values[:sale_end]
-      base.failure("Data rozpoczęcia sprzedaży musi być wcześniejsza niż data zakończenia")
+      base.failure("The sale start date must be earlier than the end date")
     end
   end
 
   rule(:sale_end) do
     if value && event && event.date && value > event.date
-      key.failure("musi być wcześniejsza niż data wydarzenia")
+      key.failure("The sale end date must be earlier than the event date")
     end
   end
 
@@ -27,8 +27,12 @@ class TicketBatchContract < ApplicationContract
       existing_batches.each do |batch|
         next if values[:id] && batch.id == values[:id]
 
-        if values[:sale_start] <= batch.sale_end && values[:sale_end] >= batch.sale_start
-          base.failure("Okres sprzedaży koliduje z inną pulą biletów")
+        puts "NEW: #{values[:sale_start]} - #{values[:sale_end]} (#{values[:sale_start].class}, #{values[:sale_end].class})"
+        puts "EXISTING: #{batch.sale_start} - #{batch.sale_end} (#{batch.sale_start.class}, #{batch.sale_end.class})"
+
+        unless values[:sale_end] < batch.sale_start || values[:sale_start] > batch.sale_end
+          puts "KOLIZJA!"
+          base.failure("The sales period conflicts with another ticket batch")
           break
         end
       end
