@@ -1,6 +1,6 @@
 # 🎟️ TicketWave 🎟️
 
-TicketWave is a comprehensive event ticketing platform that allows users to discover and purchase tickets for various events like concerts, theater shows, sports events, and stand-up comedy. Built on Ruby on Rails with PostgreSQL database, this application demonstrates modern web development practices.
+TicketWave is a learning project—a modern event ticketing platform built with Ruby on Rails and PostgreSQL. I return to it from time to time to add new features and experiment with technologies, patterns, or tools I want to learn.
 
 ## 🌟 Features
 
@@ -11,22 +11,10 @@ TicketWave is a comprehensive event ticketing platform that allows users to disc
 - **Responsive Design**: Full mobile and desktop compatibility
 - **Real-time Updates**: Live updates without page reloads using Hotwire
 
-## 📸 Application Screenshots
+## 🌐 Try it yourself
 
-### Event List
-![Event List](app/assets/images/readme/event_list.png)
-
-### Event Details
-![Event Details](app/assets/images/readme/event_details.png)
-
-### User Dashboard
-![User Dashboard](app/assets/images/readme/users_dashboard.png)
-
-### User Order History
-![User Order History](app/assets/images/readme/users_order_history.png)
-
-### Admin Dashboard
-![Admin Dashboard](app/assets/images/readme/admins_dashboard.png)
+TicketWave is live at [https://ticketwave.site/](https://ticketwave.site/) — you can sign up and test all user features yourself.
+If you’d like to try the admin panel, just let me know and I’ll grant you access.
 
 ## 🛠️ Technologies
 
@@ -35,69 +23,79 @@ TicketWave is a comprehensive event ticketing platform that allows users to disc
 - **PostgreSQL**: Primary database system
 - **Devise**: Authentication solution
 - **Dry-validation**: Object schema validation
-- **Solid Cache/Queue/Cable**: Database-backed adapters for Rails features
 - **ViewComponent**: Reusable UI components
-- **JSON API Serializer**: API data serialization
+- **Service Objects**: Business logic organized in service classes
+- **Docker & Kamal**: Containerization and deployment management
+- **RSpec**: Automated testing framework
 
 ### Frontend
 - **Hotwire (Turbo & Stimulus)**: Modern, minimal-JavaScript approach
-- **Importmap Rails**: JavaScript module management
 - **Tailwind CSS Framework**: Responsive UI design
-- **Dart Sass**: CSS preprocessing
 - **ViewComponents**: Component-based UI architecture
 
-### Testing & Quality
-- **RSpec**: Test-driven development
-- **Factory Bot**: Test data generation
-- **Capybara**: Integration testing
-- **Brakeman**: Security vulnerability scanning
-- **RuboCop**: Code style enforcement
+## 📸 Application Screenshots
 
-## 🏗️ Design Patterns Used
+### Landing Page
+![Landing page](app/assets/images/readme/landing_page.png)
 
-- **RESTful API Design**
-- **SOLID Principles**
-- **Service Objects**
-- **Contract Pattern**
-- **Component-Based UI**
-- **Serializer Pattern**
-- **Repository Pattern**
-- **Form Objects**
-- **Query Objects**
-- **Presenter Objects**
-- **Partial Extraction**
-- **Concern Modules**
+### Event List
+![Event List](app/assets/images/readme/event_list.png)
 
-## 🚀 Getting Started
+### Admin Dashboard
+![Admin Dashboard](app/assets/images/readme/admins_dashboard.png)
 
-### Prerequisites
+---
+
+## ⚙️ Technical Setup
+
+Below you’ll find technical installation instructions for both classic and Dockerized setups.
+
+### Prerequisites (classic setup)
 - Ruby 3.x
 - Rails 8.0.1
 - PostgreSQL
 - Node.js (for asset compilation)
 
-### Installation
+### Classic Installation
 
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/ticket_wave.git
-cd ticket_wave
-```
+    ```bash
+    git clone https://github.com/yourusername/ticket_wave.git
+    cd ticket_wave
+    ```
 
 2. Install dependencies:
-```bash
-bundle install
-```
+    ```bash
+    bundle install
+    ```
 
 3. Setup database:
-```bash
-rails db:create db:migrate db:seed
-```
+    ```bash
+    rails db:create db:migrate db:seed
+    ```
 
 4. Start the server:
-```bash
-bin/dev
-```
+    ```bash
+    bin/dev
+    ```
+
+### 🐳 Dockerized Installation
+
+The app is fully dockerized and can be run using Docker Compose or deployed with Kamal.
+
+1. Build and start the containers:
+    ```bash
+    docker compose up --build
+    ```
+
+2. (Optional) Run database migrations and seeds:
+    ```bash
+    docker compose run --rm web rails db:migrate db:seed
+    ```
+
+3. The app will be available at [http://localhost:3000](http://localhost:3000).
+
+---
 
 # Test
 
