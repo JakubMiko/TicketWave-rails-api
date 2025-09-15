@@ -6,13 +6,13 @@ class TicketBatchContract < ApplicationContract
     optional(:id)
     required(:available_tickets).filled(:integer, gt?: 0)
     required(:price).filled(:decimal, gt?: 0)
-    required(:sale_start).filled(:date_time)
-    required(:sale_end).filled(:date_time)
+    required(:sale_start).filled(:time)
+    required(:sale_end).filled(:time)
   end
 
   rule(:sale_start, :sale_end) do
     if values[:sale_start] && values[:sale_end] && values[:sale_start] >= values[:sale_end]
-      base.failure("The sale start date must be earlier than the end date")
+      key(:sale_start).failure("The sale start date must be earlier than the end date")
     end
   end
 
@@ -26,13 +26,8 @@ class TicketBatchContract < ApplicationContract
     if values[:sale_start] && values[:sale_end]
       existing_batches.each do |batch|
         next if values[:id] && batch.id == values[:id]
-
-        puts "NEW: #{values[:sale_start]} - #{values[:sale_end]} (#{values[:sale_start].class}, #{values[:sale_end].class})"
-        puts "EXISTING: #{batch.sale_start} - #{batch.sale_end} (#{batch.sale_start.class}, #{batch.sale_end.class})"
-
         unless values[:sale_end] < batch.sale_start || values[:sale_start] > batch.sale_end
-          puts "KOLIZJA!"
-          base.failure("The sales period conflicts with another ticket batch")
+          key(:sale_start).failure("The sales period conflicts with another ticket batch")
           break
         end
       end
