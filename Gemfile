@@ -74,6 +74,9 @@ group :development, :test do
 
   # Creates api serialization
   gem "jsonapi-serializer"
+
+  # Provides a way to generate sample data for testing [https://github.com/faker-ruby/faker]
+  gem "faker"
 end
 
 group :development do
