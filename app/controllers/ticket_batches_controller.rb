@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 class TicketBatchesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_admin!
+
   def new
     event = Event.find(params[:event_id])
     ticket_batch = TicketBatch.new(event: event)
@@ -73,5 +78,11 @@ class TicketBatchesController < ApplicationController
 
   def ticket_batch_params
     params.require(:ticket_batch).permit(:available_tickets, :price, :sale_start, :sale_end)
+  end
+
+  def authorize_admin!
+    unless current_user&.admin?
+      redirect_to root_path, alert: "You are not authorized to perform this action."
+    end
   end
 end

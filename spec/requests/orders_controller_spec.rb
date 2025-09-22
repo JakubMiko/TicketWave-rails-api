@@ -56,7 +56,7 @@ RSpec.describe "Orders", type: :request do
     end
   end
 
-  describe "GET /events/:event_id/ticket_batches/:ticket_batch_id/orders/new(.:format)" do
+  describe "GET /events/:event_id/ticket_batches/:ticket_batch_id/orders/new" do
     let(:ticket_batch) { create(:ticket_batch) }
     context "when not logged in" do
       it "allows access to new order page" do
