@@ -33,9 +33,9 @@ class OrdersController < ApplicationController
       render Orders::FormComponent.new(
         event: event,
         ticket_batch: ticket_batch,
-        order: service.order,
+        order: service.order || Order.new(order_params),
         current_user: current_user
-      ), status: :unprocessable_entity
+      ), status: :unprocessable_content
     end
   end
 

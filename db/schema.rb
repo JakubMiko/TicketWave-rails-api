@@ -53,8 +53,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_31_131721) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "ticket_batch_id", null: false
+    t.integer "user_id", null: false
+    t.integer "ticket_batch_id", null: false
     t.integer "quantity"
     t.decimal "total_price"
     t.string "status"
@@ -65,7 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_31_131721) do
   end
 
   create_table "ticket_batches", force: :cascade do |t|
-    t.bigint "event_id", null: false
+    t.integer "event_id", null: false
     t.integer "available_tickets"
     t.decimal "price"
     t.datetime "sale_start"
@@ -76,9 +76,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_31_131721) do
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.bigint "order_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "event_id", null: false
+    t.integer "order_id", null: false
+    t.integer "user_id", null: false
+    t.integer "event_id", null: false
     t.decimal "price"
     t.string "ticket_number"
     t.datetime "created_at", null: false
