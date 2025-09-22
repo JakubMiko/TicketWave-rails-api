@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
+
   def index
     events = Event.upcoming
 
@@ -30,7 +32,7 @@ class EventsController < ApplicationController
         event: service.event,
         url: events_path,
         method: :post
-      ), status: :unprocessable_entity
+      ), status: :unprocessable_content
     end
   end
 
@@ -60,7 +62,7 @@ class EventsController < ApplicationController
         event: service.event,
         url: event_path(event),
         method: :patch
-      ), status: :unprocessable_entity
+      ), status: :unprocessable_content
     end
   end
 
