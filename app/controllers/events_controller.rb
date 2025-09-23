@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    service = Events::Create.call(params: event_params)
+    service = Events::CreateService.call(params: event_params)
     if service.success?
       redirect_to events_path, notice: t("events.create.success")
     else
@@ -53,7 +53,7 @@ class EventsController < ApplicationController
     event = Event.find_by(id: params[:id])
     return render :not_found, status: :not_found unless event
 
-    service = Events::Update.call(event: event, params: event_params)
+    service = Events::UpdateService.call(event: event, params: event_params)
     if service.success?
       redirect_to events_path, notice: t("events.update.success")
     else

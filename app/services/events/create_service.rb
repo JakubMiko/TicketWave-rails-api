@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 module Events
-  class Update < BaseService
+  class CreateService < BaseService
     attr_reader :event, :params
 
-    def initialize(event:, params:)
+    def initialize(params:)
       super()
-      @event = event
       @params = params
     end
 
     def call
+      @event = Event.new(params)
       return unless valid_params?
-      event.update(params)
+
+      event.save
       event
     end
 
     private
-
 
     def valid_params?
       contract = EventContract.new
