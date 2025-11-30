@@ -2,15 +2,34 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
 
   def index
-    events = Event.upcoming
+    # CACHE EXAMPLE 1: Cache expensive database query
+    # Cache key: "events/upcoming/grid" lub "events/upcoming/list"
+    # Expires after 5 minutes OR when any event is updated
+    cache_key = "events/upcoming/#{params[:view] || 'grid'}"
+
+    events = Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
+      # This block executes ONLY if cache is empty/expired
+      Rails.logger.info "🔴 CACHE MISS: Loading events from database"
+      Event.upcoming.to_a  # .to_a executes query and caches result array
+    end
+
+    Rails.logger.info "✅ CACHE HIT: Loaded #{events.count} events from memcached"
 
     render Events::IndexComponent.new(events: events, current_user: current_user, view: params[:view]), status: :ok
   end
 
   def show
+    # CACHE EXAMPLE 2: Cache single event with associations
+    # Cache key automatically includes event.updated_at timestamp
+    # When event updates, cache key changes → auto-invalidation!
     event = Event.includes(:ticket_batches).find(params[:id])
 
-    render Events::ShowComponent.new(event: event, current_user: current_user), status: :ok
+    cached_event = Rails.cache.fetch([ "event", event ], expires_in: 1.hour) do
+      Rails.logger.info "🔴 CACHE MISS: Loading event #{event.id} from database"
+      event
+    end
+
+    render Events::ShowComponent.new(event: cached_event, current_user: current_user), status: :ok
   end
 
   def new
@@ -25,6 +44,8 @@ class EventsController < ApplicationController
   def create
     service = Events::CreateService.call(params: event_params)
     if service.success?
+      # CACHE INVALIDATION: Clear cache after creating new event
+      clear_events_cache
       redirect_to events_path, notice: t("events.create.success")
     else
       flash.now[:alert] = service.errors.join("\n")
@@ -55,6 +76,8 @@ class EventsController < ApplicationController
 
     service = Events::UpdateService.call(event: event, params: event_params)
     if service.success?
+      # CACHE INVALIDATION: Clear cache after updating event
+      clear_events_cache
       redirect_to events_path, notice: t("events.update.success")
     else
       flash.now[:alert] = service.errors.join("\n")
@@ -70,6 +93,9 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     event.destroy
 
+    # CACHE INVALIDATION: Clear cache after deleting event
+    clear_events_cache
+
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("event_#{event.id}") }
       format.html { redirect_to events_path, notice: t("events.destroy.success") }
@@ -80,5 +106,12 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:name, :description, :place, :date, :category, :image)
+  end
+
+  # CACHE HELPER: Clear all events-related cache
+  def clear_events_cache
+    Rails.logger.info "🗑️ Clearing events cache..."
+    Rails.cache.delete_matched("events/upcoming/*")  # Clear all view variants
+    Rails.logger.info "✅ Events cache cleared"
   end
 end

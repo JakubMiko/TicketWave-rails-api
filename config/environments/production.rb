@@ -47,7 +47,13 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
-  # config.cache_store = :mem_cache_store
+  # Use Memcached in production (configure server address via ENV variable)
+  config.cache_store = :mem_cache_store, ENV.fetch("MEMCACHED_SERVERS", "localhost:11211"), {
+    namespace: "ticketwave_prod",
+    expires_in: 1.day,
+    compress: true,
+    pool_size: 5  # Connection pool for multi-threaded env
+  }
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :resque

@@ -25,8 +25,13 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
   end
 
-  # Change to :null_store to avoid any caching.
-  config.cache_store = :memory_store
+  # Use Memcached for caching (via dalli gem)
+  # localhost:11211 is default memcached port
+  config.cache_store = :mem_cache_store, "localhost:11211", {
+    namespace: "ticketwave_dev",  # Prefix for all keys
+    expires_in: 1.day,             # Default TTL
+    compress: true                 # Compress values > 1KB
+  }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
