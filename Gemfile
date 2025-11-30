@@ -49,7 +49,9 @@ gem "image_processing", "~> 1.2"
 
 # Provides authentication [https://github.com/heartcombo/devise]
 gem "devise"
-
+# Error and performance monitor [https://docs.sentry.io/platforms/ruby/]
+gem "sentry-ruby"
+gem "sentry-rails"
 
 group :development, :test do
   gem "pry"
