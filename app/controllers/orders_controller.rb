@@ -18,6 +18,30 @@ class OrdersController < ApplicationController
     ticket_batch = TicketBatch.find(params[:ticket_batch_id])
     event = ticket_batch.event
 
+    # Example 3: SET TAGS - Tagging for filtering in Sentry
+    Sentry.set_tags(
+      service: "orders_create",
+      event_id: event.id,
+      has_user: current_user.present?,
+      ticket_batch_id: ticket_batch.id
+    )
+
+    # Example 2: SET EXTRAS - Additional context data
+    Sentry.set_extras(
+      ticket_batch_price: ticket_batch.price,
+      available_tickets: ticket_batch.available_tickets,
+      event_name: event.name
+    )
+
+    # Example 1: BREADCRUMB - Tracking user actions
+    Sentry.add_breadcrumb(
+      Sentry::Breadcrumb.new(
+        message: "User initiated order",
+        category: "user_action",
+        data: { event_name: event.name, quantity: order_params[:quantity] }
+      )
+    )
+
     service = Orders::CreateService.new(
       ticket_batch: ticket_batch,
       params: order_params,
@@ -29,6 +53,9 @@ class OrdersController < ApplicationController
     if service.success?
       redirect_to confirmation_order_path(service.order), notice: "Order placed successfully."
     else
+      # Example 6: CAPTURE MESSAGE - Capture service failure
+      Sentry.capture_message("Order creation failed", level: :error)
+
       flash.now[:alert] = service.errors.join("\n")
       render Orders::FormComponent.new(
         event: event,

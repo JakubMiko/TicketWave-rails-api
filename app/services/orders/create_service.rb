@@ -15,9 +15,31 @@ module Orders
     end
 
     def call
+      # Example 1: BREADCRUMB - Tracking execution steps
+      Sentry.add_breadcrumb(
+        Sentry::Breadcrumb.new(
+          message: "Order creation started",
+          category: "service",
+          data: { quantity: params[:quantity], ticket_batch_id: ticket_batch.id }
+        )
+      )
+
       return self unless valid_params?
 
       @order = build_order
+
+      # Example 1: BREADCRUMB - Tracking execution steps
+      Sentry.add_breadcrumb(
+        Sentry::Breadcrumb.new(
+          message: "Order build",
+          category: "service",
+          data: { total_price: @order.total_price }
+        )
+      )
+
+      # TEMPORARY: Force error to test breadcrumbs in Sentry
+      raise StandardError, "Testing breadcrumbs" if Rails.env.development?
+
       assign_user!
 
       ActiveRecord::Base.transaction do
@@ -31,6 +53,18 @@ module Orders
     def valid_params?
       validation_result = OrderContract.new.call(params.to_h.merge(ticket_batch: ticket_batch))
       if validation_result.failure?
+        # Example 6: CAPTURE MESSAGE - Messages with level and extras
+        # Use constant text so all validation failures group together in Sentry
+        Sentry.capture_message(
+          "Order validation failed",
+          level: :warning,
+          extra: {
+            validation_errors: validation_result.errors.to_h,
+            params: params.to_h,
+            ticket_batch_id: ticket_batch.id
+          }
+        )
+
         errors.concat(
           validation_result.errors.to_h.flat_map do |key, messages|
             Array(messages).map { |msg| "➔ #{key.to_s.humanize} #{msg.capitalize}" }
@@ -83,6 +117,16 @@ module Orders
 
     def save_order_and_tickets
       if @order.user.nil?
+        # Example 2: SET EXTRAS - Additional context data
+        Sentry.set_extras(
+          ticket_batch_id: ticket_batch.id,
+          event_id: event.id,
+          order_quantity: @order.quantity,
+          guest_email: guest_params[:guest_email]
+        )
+
+        Sentry.capture_message("Order save failed: user missing", level: :error)
+
         errors << "➔ User must exist"
         return
       end
@@ -96,7 +140,18 @@ module Orders
     end
 
     def update_ticket_batch!
-      ticket_batch.update!(available_tickets: available_tickets_after_order)
+      # Example 5: CAPTURE EXCEPTION - Catching specific errors
+      begin
+        ticket_batch.update!(available_tickets: available_tickets_after_order)
+      rescue ActiveRecord::RecordInvalid => e
+        Sentry.capture_exception(e, extra: {
+          ticket_batch_id: ticket_batch.id,
+          current_available: ticket_batch.available_tickets,
+          attempted_new_value: available_tickets_after_order,
+          order_quantity: @order.quantity
+        })
+        raise # Re-raise to maintain transaction rollback
+      end
     end
 
     def available_tickets_after_order
