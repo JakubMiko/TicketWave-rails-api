@@ -14,8 +14,9 @@ Sentry.init do |config|
   # see https://docs.sentry.io/platforms/ruby/data-management/data-collected/ for more info
   config.send_default_pii = true
 
-  # Set traces sample rate (optional - for performance monitoring)
-  # config.traces_sample_rate = 0.1
+  # Set traces sample rate (1.0 = 100% of transactions for performance monitoring)
+  # In production, use lower value like 0.1 (10%) to reduce overhead
+  config.traces_sample_rate = 1.0
 
   # TEMPORARY: Disable SSL verification for development (REMOVE IN PRODUCTION!)
   config.transport.ssl_verification = false if Rails.env.development?

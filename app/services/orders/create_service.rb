@@ -15,6 +15,14 @@ module Orders
     end
 
     def call
+      # Example 7: PERFORMANCE MONITORING - Track service execution as a span
+      # Get current transaction from Rails controller (already started by Sentry)
+      parent_span = Sentry.get_current_scope.get_span
+      span = parent_span&.start_child(
+        op: "service.order_creation",
+        description: "Orders::CreateService#call"
+      )
+
       # Example 1: BREADCRUMB - Tracking execution steps
       Sentry.add_breadcrumb(
         Sentry::Breadcrumb.new(
@@ -38,14 +46,18 @@ module Orders
       )
 
       # TEMPORARY: Force error to test breadcrumbs in Sentry
-      raise StandardError, "Testing breadcrumbs" if Rails.env.development?
+      # raise StandardError, "Testing breadcrumbs" if Rails.env.development?
 
       assign_user!
 
       ActiveRecord::Base.transaction do
         save_order_and_tickets
       end
+
       self
+    ensure
+      # Always finish span to measure performance
+      span&.finish
     end
 
     private
@@ -159,6 +171,12 @@ module Orders
     end
 
     def create_tickets!
+      # Example 7: PERFORMANCE MONITORING - Measure specific operation (span)
+      span = Sentry.get_current_scope.get_span&.start_child(
+        op: "db.create_tickets",
+        description: "Creating #{@order.quantity} tickets"
+      )
+
       @order.quantity.to_i.times do
         Ticket.create!(
           order: @order,
@@ -168,6 +186,8 @@ module Orders
           ticket_number: "#{event.id}-#{SecureRandom.hex(4)}"
         )
       end
+    ensure
+      span&.finish
     end
   end
 end

@@ -73,7 +73,15 @@ class OrdersController < ApplicationController
   end
 
   def show
+    # Example 7: PERFORMANCE MONITORING - Track database query performance
+    span = Sentry.get_current_scope.get_span&.start_child(
+      op: "db.query",
+      description: "Load order with tickets"
+    )
+
     order = Order.includes(:tickets).find(params[:id])
+
+    span&.finish
 
     render Orders::ShowComponent.new(order: order)
   end
