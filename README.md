@@ -1,8 +1,8 @@
-# 🎟️ TicketWave 🎟️
+# TicketWave
 
 TicketWave is a learning project—a modern event ticketing platform built with Ruby on Rails and PostgreSQL. I return to it from time to time to add new features and experiment with technologies, patterns, or tools I want to learn.
 
-## 🌟 Features
+## Features
 
 - **User Authentication & Authorization**: Secure registration and login functionality with role-based access control
 - **Event Discovery**: Browse and search through various events with filtering options
@@ -11,12 +11,13 @@ TicketWave is a learning project—a modern event ticketing platform built with 
 - **Responsive Design**: Full mobile and desktop compatibility
 - **Real-time Updates**: Live updates without page reloads using Hotwire
 
-## 🌐 Try it yourself
+## Try it yourself
+[**Temporarily unavailable - I am moving from DO to OVH**]
 
 TicketWave is live at [https://ticketwave.site/](https://ticketwave.site/) — you can sign up and test all user features yourself.
 If you’d like to try the admin panel, just let me know and I’ll grant you access.
 
-## 🛠️ Technologies
+## Technologies
 
 ### Backend
 - **Ruby on Rails 8.0.1**: Server-side framework
@@ -33,7 +34,7 @@ If you’d like to try the admin panel, just let me know and I’ll grant you ac
 - **Tailwind CSS Framework**: Responsive UI design
 - **ViewComponents**: Component-based UI architecture
 
-## 📸 Application Screenshots
+## Application Screenshots
 
 ### Landing Page
 ![Landing page](app/assets/images/readme/landing_page.png)
@@ -46,7 +47,7 @@ If you’d like to try the admin panel, just let me know and I’ll grant you ac
 
 ---
 
-## ⚙️ Technical Setup
+## Technical Setup
 
 Below you’ll find technical installation instructions for both classic and Dockerized setups.
 
@@ -79,7 +80,7 @@ Below you’ll find technical installation instructions for both classic and Doc
     bin/dev
     ```
 
-### 🐳 Dockerized Installation
+### Dockerized Installation
 
 The app is fully dockerized and can be run using Docker Compose or deployed with Kamal.
 
@@ -117,7 +118,7 @@ After tests finish, you can open the coverage report in your browser:
   xdg-open coverage/index.html
   ```
 
-## 🚀 Deployment
+## Deployment
 
 TicketWave uses [Kamal](https://kamal-deploy.org/) for simple Docker-based deployment to your own server.
 
