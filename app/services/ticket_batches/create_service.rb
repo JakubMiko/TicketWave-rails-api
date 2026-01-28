@@ -8,7 +8,7 @@ module TicketBatches
       super()
       @event = event
       @params = params
-      @ticket_batch = event.ticket_batches.new(params) # params muszą być permitted
+      @ticket_batch = event.ticket_batches.new(params)
     end
 
     def call
